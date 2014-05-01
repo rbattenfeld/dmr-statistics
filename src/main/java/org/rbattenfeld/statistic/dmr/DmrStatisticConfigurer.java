@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.rbattenfeld.statistic.dmr.ejb3.Ejb3StatisticDetails;
+import org.rbattenfeld.statistic.dmr.platform.PlatformStatisticDetails;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -20,6 +21,9 @@ public class DmrStatisticConfigurer {
 	@ElementList(entry = "ejbStatistics", inline = true)
 	private List<Ejb3StatisticDetails> _ejbStatisticDetailList;
 
+	@ElementList(entry = "platformStatistics", inline = true)
+	private List<PlatformStatisticDetails> _platformDetailsList;
+	
 	public String getDeploymentName() {
 		return _deploymentName;
 	}
@@ -36,6 +40,14 @@ public class DmrStatisticConfigurer {
 		_ejbStatisticDetailList = getEjbStatistics;
 	}
 	
+	public List<PlatformStatisticDetails> getPlatformDetailsList() {
+		return _platformDetailsList;
+	}
+
+	public void setPlatformDetailsList(final List<PlatformStatisticDetails> platformDetailsList) {
+		_platformDetailsList = platformDetailsList;
+	}
+
 	public static DmrStatisticConfigurer loadFromResource(final String resourceName) throws IOException {
 		final Serializer serializer = new Persister();
 		final InputStream resourceStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);

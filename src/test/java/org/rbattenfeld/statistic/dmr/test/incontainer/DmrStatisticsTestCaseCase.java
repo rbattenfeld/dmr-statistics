@@ -31,6 +31,7 @@ import org.rbattenfeld.statistic.dmr.ejb3.Ejb3StatisticFormatter;
 import org.rbattenfeld.statistic.dmr.ejb3.EjbType;
 import org.rbattenfeld.statistic.dmr.ejb3.IEjb3StatisticDetails;
 import org.rbattenfeld.statistic.dmr.platform.PlatformStatisticExtractor;
+import org.rbattenfeld.statistic.dmr.platform.PlatformStatisticFormatter;
 
 @RunWith(Arquillian.class)
 public final class DmrStatisticsTestCaseCase {
@@ -40,13 +41,15 @@ public final class DmrStatisticsTestCaseCase {
     public static JavaArchive createDeployment() {
     	final File manifestMF = new File("../dmr-statistics/src/test/resources/MANIFEST.MF"); 
     	final File ejb3StatFile = new File("../dmr-statistics/src/test/resources/ejbStat.xml"); 
+    	final File statFile = new File("../dmr-statistics/src/test/resources/stat.xml"); 
     	return  ShrinkWrap.create(JavaArchive.class, "resourceMonitor.jar")
 			.addPackages(true, "org.rbattenfeld.statistic.dmr")
 			.addPackages(true, "org.simpleframework.xml")
 			.addPackage("org.rbattenfeld.statistic.dmr.test.incontainer")
 			.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
     	    .addAsManifestResource(manifestMF, "MANIFEST.MF")
-    	    .addAsManifestResource(ejb3StatFile, "ejbStat.xml");
+    	    .addAsManifestResource(ejb3StatFile, "ejbStat.xml")
+    	    .addAsManifestResource(statFile, "stat.xml");
     }
 
     @EJB(mappedName = "java:app/resourceMonitor/TestBean!com.swx.ptp.kernel.statistic.test.incontainer.dmr.TestBean")
@@ -63,8 +66,14 @@ public final class DmrStatisticsTestCaseCase {
     
     @Test
     public void testPlatform() throws Exception {
-    	try (final DmrClient client = new DmrClient(true)) {
-    		_platformStatisticExtractor.getStatistic(client.getModelController());
+    	final DmrStatisticConfigurer configurer = DmrStatisticConfigurer.loadFromResource("META-INF/stat.xml");
+    	try (final DmrClient client = new DmrClient(true)) {    		
+    		PlatformStatisticExtractor.enrich(client.getModelController(), configurer.getPlatformDetailsList());
+    		final PlatformStatisticFormatter formatter = new PlatformStatisticFormatter();
+    		final String headerLine = formatter.formatHeader(configurer);
+    		final String bodyLine = formatter.formatLine(configurer, configurer.getPlatformDetailsList());
+    		_Logger.info(headerLine);
+    		_Logger.info(bodyLine);
     	}
     }
     
