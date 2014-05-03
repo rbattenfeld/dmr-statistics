@@ -1,4 +1,4 @@
-package org.rbattenfeld.statistic.dmr.ejb3;
+package org.statistic.dmr.stat.ejb3;
 
 public enum EjbType {
 	StatelessBean("stateless-session-bean"),

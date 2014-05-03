@@ -1,18 +1,17 @@
-package org.rbattenfeld.statistic.dmr.platform;
+package org.statistic.dmr.stat.platform;
 
 import java.util.List;
 
-import org.rbattenfeld.statistic.dmr.DmrStatisticConfigurer;
-import org.rbattenfeld.statistic.dmr.DmrStatisticFormatter;
+import org.statistic.dmr.api.DmrStatisticFormatter;
 
-public class PlatformStatisticFormatter implements DmrStatisticFormatter<DmrStatisticConfigurer, List<? extends IPlatformStatisticDetails>> {
+public class PlatformStatisticCSVFormatter implements DmrStatisticFormatter<List<? extends PlatformStatisticModel>, String> {
 	public static final char _SEPARATOR = ',';	
 	
 
 	@Override
-	public String formatHeader(DmrStatisticConfigurer configurer) {
+	public String formatHeader(List<? extends PlatformStatisticModel> source) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final IPlatformStatisticDetails detail : configurer.getPlatformDetailsList()) {	
+		for (final PlatformStatisticModel detail : source) {	
 			final String type = detail.getType();
 			final String subType = detail.getSubType();
 			for (final String key : detail.getKeys()) {
@@ -23,9 +22,9 @@ public class PlatformStatisticFormatter implements DmrStatisticFormatter<DmrStat
 	}
 
 	@Override
-	public String formatLine(DmrStatisticConfigurer configurer,	List<? extends IPlatformStatisticDetails> source) {
+	public String formatLine(List<? extends PlatformStatisticModel> source) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final IPlatformStatisticDetails detail : configurer.getPlatformDetailsList()) {
+		for (final PlatformStatisticModel detail : source) {
 			for (final String value : detail.getValues()) {
 				add(buf, value, _SEPARATOR);
 			}

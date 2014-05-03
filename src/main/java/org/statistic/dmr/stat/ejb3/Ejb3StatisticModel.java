@@ -1,14 +1,13 @@
-package org.rbattenfeld.statistic.dmr.ejb3;
+package org.statistic.dmr.stat.ejb3;
 
 import java.io.Serializable;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.ElementArray;
 
 /**
  * This class defines the EJB3 bean statistical details which have to be extracted.
  */
-public class Ejb3StatisticDetails implements IEjb3StatisticDetails, Serializable {
+public class Ejb3StatisticModel implements Serializable {
 	private static final long serialVersionUID = -1592685802037096782L;
 	
 	@Attribute(name = "beanName")
@@ -20,11 +19,17 @@ public class Ejb3StatisticDetails implements IEjb3StatisticDetails, Serializable
 	@Attribute(name = "type")
 	private final EjbType _type;
 	
-	@ElementArray(name = "keys")
+	@Attribute(name = "keys")
 	private final String[] _keys;
-	
-	@ElementArray(name = "methods")
+		
+	@Attribute(name = "methods")
 	private final String[] _methods;
+	
+	@Attribute(name = "keyValues", required = false)
+	private String[] _keyValues;
+	
+	@Attribute(name = "methodValues", required = false)
+	private String[] _methodValues;
 	
 	/**
 	 * Constructs a new instance of the class.
@@ -33,12 +38,12 @@ public class Ejb3StatisticDetails implements IEjb3StatisticDetails, Serializable
 	 * @param keys defines which core statistics to extract. 
 	 * @param methods defined which methods statistics to extract.
 	 */
-	public Ejb3StatisticDetails(
+	public Ejb3StatisticModel(
 			@Attribute(name="beanName") final String beanName,
 			@Attribute(name="beanNameAbbr") final String beanNameAbbr,  
 			@Attribute(name="type") final EjbType type, 
-			@ElementArray(name = "keys") final String[] keys,
-			@ElementArray(name = "methods") final String[] methods) {
+			@Attribute(name = "keys") final String[] keys,
+			@Attribute(name = "methods") final String[] methods) {
 		_beanName = beanName;
 		_beanNameAbbr = beanNameAbbr;
 		_type = type;		
@@ -46,29 +51,40 @@ public class Ejb3StatisticDetails implements IEjb3StatisticDetails, Serializable
 		_methods = methods;
 	}
 	
-	@Override
 	public String getBeanName() {
 		return _beanName;
 	}
 
-	@Override
 	public String getBeanNameAbbr() {
 		return _beanNameAbbr;
 	}
 	
-	@Override
 	public String[] getKeys() {
 		return _keys;
 	}
 
-	@Override
 	public String[] getMethods() {
 		return _methods;
 	}
 
-	@Override
 	public EjbType getEjbType() {
 		return _type;
 	}
 
+	public String[] getKeyValues() {
+		return _keyValues;
+	}
+
+	public String[] getMethodValues() {
+		return _methodValues;
+	}
+
+	public void setKeyValues(String[] keyValues) {
+		_keyValues = keyValues;
+	}
+
+	public void setMethodValues(String[] methodValues) {
+		_methodValues = methodValues;
+	}
+	
 }

@@ -1,4 +1,4 @@
-package org.rbattenfeld.statistic.dmr.test.incontainer;
+package org.statistic.dmr.test.incontainer;
 
 import javax.ejb.Singleton;
 

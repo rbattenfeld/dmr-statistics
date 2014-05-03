@@ -1,4 +1,4 @@
-package org.rbattenfeld.statistic.dmr.platform;
+package org.statistic.dmr.stat.platform;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -89,9 +89,9 @@ public class PlatformStatistics {
 		
 	}
 	
-	public static PlatformStatistics getDefaultStatistics(final ModelControllerClient client, final List<? extends IPlatformStatisticDetails> platformDetails) throws IOException {
+	public static PlatformStatistics getDefaultStatistics(final ModelControllerClient client, final List<? extends PlatformStatisticModel> platformDetails) throws IOException {
 		final PlatformStatistics stat = new PlatformStatistics();		
-		for (final IPlatformStatisticDetails details : platformDetails) {
+		for (final PlatformStatisticModel details : platformDetails) {
 			ModelNode node = null;
 			if (details.getSubType() != null && !details.getSubType().isEmpty()) {
 				node = getPlatformOperation(client, details.getType()).get(ClientConstants.RESULT).get(details.getSubType());

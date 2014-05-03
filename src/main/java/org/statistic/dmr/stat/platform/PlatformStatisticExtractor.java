@@ -1,4 +1,4 @@
-package org.rbattenfeld.statistic.dmr.platform;
+package org.statistic.dmr.stat.platform;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,11 +7,12 @@ import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
+import org.statistic.dmr.api.DmrStatisticExtractor;
 
-public class PlatformStatisticExtractor {
+public class PlatformStatisticExtractor implements DmrStatisticExtractor<List<? extends PlatformStatisticModel>> {
 		
-	public static void enrich(final ModelControllerClient client, final List<? extends IPlatformStatisticDetails> platformDetails) throws IOException {
-		for (final IPlatformStatisticDetails details : platformDetails) {
+	public void updateModel(final ModelControllerClient client, final List<? extends PlatformStatisticModel> platformDetails) throws IOException {
+		for (final PlatformStatisticModel details : platformDetails) {
 			ModelNode node = null;
 			if (details.getSubType() != null && !details.getSubType().isEmpty()) {
 				node = getPlatformOperation(client, details.getType()).get(ClientConstants.RESULT).get(details.getSubType());
@@ -33,7 +34,7 @@ public class PlatformStatisticExtractor {
 	// -- Private Methods ----------------------------------------------------||
 	// -----------------------------------------------------------------------||
 
-	private static ModelNode getPlatformOperation(final ModelControllerClient client, final String type) throws IOException {
+	private ModelNode getPlatformOperation(final ModelControllerClient client, final String type) throws IOException {
 		final ModelNode operation = new ModelNode();
 		operation.get(ClientConstants.OP).set(ClientConstants.READ_RESOURCE_OPERATION);
 		operation.get(ClientConstants.RECURSIVE).set(true);

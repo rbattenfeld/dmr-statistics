@@ -1,12 +1,10 @@
-package org.rbattenfeld.statistic.dmr.platform;
+package org.statistic.dmr.stat.platform;
 
 import java.io.Serializable;
 
-import org.rbattenfeld.statistic.dmr.ejb3.EjbType;
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.ElementArray;
 
-public class PlatformStatisticDetails implements IPlatformStatisticDetails, Serializable {
+public class PlatformStatisticModel implements Serializable {
 	private static final long serialVersionUID = 7771617395302880088L;
 	
 	@Attribute(name = "type")
@@ -18,10 +16,10 @@ public class PlatformStatisticDetails implements IPlatformStatisticDetails, Seri
 	@Attribute(name = "keys")
 	private String[] _keys;
 
-//	@Attribute(name = "values")
+	@Attribute(name = "values", required = false)
 	private String[] _values;
 
-	public PlatformStatisticDetails(
+	public PlatformStatisticModel(
 			@Attribute(name = "type") final String type, 
 			@Attribute(name = "subType") final String subType, 
 			@Attribute(name = "keys") final String[] keys) {
@@ -30,42 +28,34 @@ public class PlatformStatisticDetails implements IPlatformStatisticDetails, Seri
 		_keys = keys;
 	}
 	
-	@Override
 	public String getType() {
 		return _type;
 	}
 
-	@Override
 	public void setType(String type) {
 		_type = type;
 	}
 	
-	@Override
 	public String getSubType() {
 		return _subType;
 	}
 
-	@Override
 	public void setSubType(String subType) {
 		_subType = subType;
 	}
 
-	@Override
 	public String[] getKeys() {
 		return _keys;
 	}
 
-	@Override
 	public void setKeys(String[] keys) {
 		_keys = keys;
 	}
 
-	@Override
 	public String[] getValues() {
 		return _values;
 	}
 
-	@Override
 	public void setValues(String[] values) {
 		_values = values;
 	}

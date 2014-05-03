@@ -1,28 +1,28 @@
-package org.rbattenfeld.statistic.dmr;
+package org.statistic.dmr.conf;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.rbattenfeld.statistic.dmr.ejb3.Ejb3StatisticDetails;
-import org.rbattenfeld.statistic.dmr.platform.PlatformStatisticDetails;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
+import org.statistic.dmr.stat.platform.PlatformStatisticModel;
 
 @Root
-public class DmrStatisticConfigurer {
+public class DmrStatisticConfiguration {
 	
 	@Attribute(name = "deploymentName")
 	private String _deploymentName;
 	
 	@ElementList(entry = "ejbStatistics", inline = true)
-	private List<Ejb3StatisticDetails> _ejbStatisticDetailList;
+	private List<Ejb3StatisticModel> _ejbStatisticDetailList;
 
 	@ElementList(entry = "platformStatistics", inline = true)
-	private List<PlatformStatisticDetails> _platformDetailsList;
+	private List<PlatformStatisticModel> _platformDetailsList;
 	
 	public String getDeploymentName() {
 		return _deploymentName;
@@ -32,27 +32,27 @@ public class DmrStatisticConfigurer {
 		_deploymentName = deploymentName;
 	}
 
-	public List<Ejb3StatisticDetails> getEjbStatistics() {
+	public List<Ejb3StatisticModel> getEjbStatistics() {
 		return _ejbStatisticDetailList;
 	}
 
-	public void setEjbStatisticDetailList(final List<Ejb3StatisticDetails> getEjbStatistics) {
+	public void setEjbStatisticDetailList(final List<Ejb3StatisticModel> getEjbStatistics) {
 		_ejbStatisticDetailList = getEjbStatistics;
 	}
 	
-	public List<PlatformStatisticDetails> getPlatformDetailsList() {
+	public List<PlatformStatisticModel> getPlatformDetailsList() {
 		return _platformDetailsList;
 	}
 
-	public void setPlatformDetailsList(final List<PlatformStatisticDetails> platformDetailsList) {
+	public void setPlatformDetailsList(final List<PlatformStatisticModel> platformDetailsList) {
 		_platformDetailsList = platformDetailsList;
 	}
 
-	public static DmrStatisticConfigurer loadFromResource(final String resourceName) throws IOException {
+	public static DmrStatisticConfiguration loadFromResource(final String resourceName) throws IOException {
 		final Serializer serializer = new Persister();
 		final InputStream resourceStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
 		try {
-			return serializer.read(DmrStatisticConfigurer.class, resourceStream);
+			return serializer.read(DmrStatisticConfiguration.class, resourceStream);
 		} catch (final Exception ex) {
 			throw new IOException(ex);
 		}

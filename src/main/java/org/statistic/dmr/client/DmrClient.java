@@ -1,4 +1,4 @@
-package org.rbattenfeld.statistic.dmr;
+package org.statistic.dmr.client;
 
 import java.io.Closeable;
 import java.io.IOException;
