@@ -2,9 +2,9 @@ package org.statistic.dmr.stat.ejb3;
 
 import java.util.List;
 
-import org.statistic.dmr.api.DmrStatisticFormatter;
+import org.statistic.dmr.api.IDmrStatisticFormatter;
 
-public class Ejb3StatisticCSVFormatter implements DmrStatisticFormatter<List<? extends Ejb3StatisticModel>, String> {
+public class Ejb3StatisticCSVFormatter implements IDmrStatisticFormatter<List<? extends Ejb3StatisticModel>, String> {
 	public static final char _SEPARATOR = ',';	
 	
 	@Override

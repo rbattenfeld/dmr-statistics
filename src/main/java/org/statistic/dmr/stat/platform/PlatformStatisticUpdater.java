@@ -7,9 +7,9 @@ import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
-import org.statistic.dmr.api.DmrStatisticExtractor;
+import org.statistic.dmr.api.IDmrStatisticUpdater;
 
-public class PlatformStatisticExtractor implements DmrStatisticExtractor<List<? extends PlatformStatisticModel>> {
+public class PlatformStatisticUpdater implements IDmrStatisticUpdater<List<? extends PlatformStatisticModel>> {
 		
 	public void updateModel(final ModelControllerClient client, final List<? extends PlatformStatisticModel> platformDetails) throws IOException {
 		for (final PlatformStatisticModel details : platformDetails) {

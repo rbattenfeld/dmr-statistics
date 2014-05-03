@@ -7,13 +7,13 @@ import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
-import org.statistic.dmr.api.DmrStatisticExtractor;
+import org.statistic.dmr.api.IDmrStatisticUpdater;
 
-public class Ejb3StatisticExtractor implements DmrStatisticExtractor<List<? extends Ejb3StatisticModel>> {		
+public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends Ejb3StatisticModel>> {		
 	
 	private final String _deployment;
 	
-	public Ejb3StatisticExtractor(final String deployment) {
+	public Ejb3StatisticUpdater(final String deployment) {
 		_deployment = deployment;
 	}
 

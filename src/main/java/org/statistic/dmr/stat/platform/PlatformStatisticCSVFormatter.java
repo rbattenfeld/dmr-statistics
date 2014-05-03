@@ -2,9 +2,9 @@ package org.statistic.dmr.stat.platform;
 
 import java.util.List;
 
-import org.statistic.dmr.api.DmrStatisticFormatter;
+import org.statistic.dmr.api.IDmrStatisticFormatter;
 
-public class PlatformStatisticCSVFormatter implements DmrStatisticFormatter<List<? extends PlatformStatisticModel>, String> {
+public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<List<? extends PlatformStatisticModel>, String> {
 	public static final char _SEPARATOR = ',';	
 	
 
