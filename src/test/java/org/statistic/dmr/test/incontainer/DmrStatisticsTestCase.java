@@ -2,7 +2,6 @@ package org.statistic.dmr.test.incontainer;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,35 +13,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.statistic.dmr.client.DmrClient;
 import org.statistic.dmr.conf.DmrStatisticConfiguration;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticCSVFormatter;
-import org.statistic.dmr.stat.ejb3.Ejb3StatisticUpdater;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
+import org.statistic.dmr.stat.ejb3.Ejb3StatisticUpdater;
 import org.statistic.dmr.stat.ejb3.EjbType;
 import org.statistic.dmr.stat.platform.PlatformStatisticCSVFormatter;
 import org.statistic.dmr.stat.platform.PlatformStatisticUpdater;
 
 @RunWith(Arquillian.class)
-public final class DmrStatisticsTestCaseCase {
-	private static final Log _Logger = LogFactory.getLog(DmrStatisticsTestCaseCase.class);
+public final class DmrStatisticsTestCase {
+	private static final Log _Logger = LogFactory.getLog(DmrStatisticsTestCase.class);
 	
     @Deployment
     public static JavaArchive createDeployment() {
-    	final File manifestMF = new File("../dmr-statistics/src/test/resources/MANIFEST.MF"); 
-    	final File statFile = new File("../dmr-statistics/src/test/resources/stat.xml"); 
-    	return  ShrinkWrap.create(JavaArchive.class, "resourceMonitor.jar")
-			.addPackages(true, "org.statistic.dmr")
-			.addPackages(true, "org.simpleframework.xml")
-			.addPackage("org.statistic.dmr.test.incontainer")
-			.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
-    	    .addAsManifestResource(manifestMF, "MANIFEST.MF")
-    	    .addAsManifestResource(statFile, "stat.xml");
+    	return TestUtil.getDeployment();
     }
 
     @EJB(mappedName = "java:app/resourceMonitor/TestBean!com.swx.ptp.kernel.statistic.test.incontainer.dmr.TestBean")
@@ -131,7 +120,11 @@ public final class DmrStatisticsTestCaseCase {
 	    	details.add(testBeanDetails);  
 	    	details.add(testSingletonDetails);
 	    	final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater("test.war");
-    		ejb3StatExtractor.updateModel(client.getModelController(),  details);   
+    		ejb3StatExtractor.updateModel(client.getModelController(),  details); 
+    		
+    		_Logger.info("\n" + testBeanDetails.toString());
+    		_Logger.info("\n" + testSingletonDetails.toString());
+    		
     		assertEquals(
     				formatter.formatHeader(details).split(", ", -1).length, 
     				formatter.formatLine(details).split(", ", -1).length);
@@ -158,26 +151,5 @@ public final class DmrStatisticsTestCaseCase {
     				formatter.formatLine(details).split(", ", -1).length);
     	}
     }
-    
-    //-----------------------------------------------------------------------||
-    //-- Private Method -----------------------------------------------------||
-    //-----------------------------------------------------------------------||
-    
-//    private void printStatistic(final Ejb3ClassStatistic ejb3Stat) {
-//    	_Logger.info(String.format("%-25s : %s", "Deployment", ejb3Stat.getDeployment()));
-//    	_Logger.info(String.format("%-25s : %s", "Bean", ejb3Stat.getBeanName()));
-//    	
-//    	for (final Map.Entry<String, Object> entry : ejb3Stat.getClassStatistic().entrySet()) {
-//    		_Logger.info(String.format("%-25s : %s", entry.getKey(), entry.getValue()));
-//    	}
-//    	
-//    	for (final Ejb3MethodStatistic methodStat : ejb3Stat.getMethodStatistic()) {
-//    		_Logger.info(String.format("%-25s : %d", methodStat.getMethodName() + " executionTime", methodStat.getExecutionTime()));
-//    		_Logger.info(String.format("%-25s : %d", methodStat.getMethodName() + " invocations", methodStat.getInvocations()));
-//    		_Logger.info(String.format("%-25s : %d", methodStat.getMethodName() + " waitTime", methodStat.getWaitTime()));
-//    	}
-//    	
-//    	_Logger.info("csv: " +  ejb3Stat.toCSVString(','));
-//    }
     
 }

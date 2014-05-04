@@ -7,6 +7,7 @@ import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
+import org.jboss.dmr.Property;
 import org.statistic.dmr.api.IDmrStatisticUpdater;
 
 public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends Ejb3StatisticModel>> {		
@@ -26,16 +27,16 @@ public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends
 	//-- Private Methods ----------------------------------------------------||
 	//-----------------------------------------------------------------------||
 	
-	private void update(final ModelControllerClient client, final String deployment, final List<? extends Ejb3StatisticModel> ejb3Details) throws IOException {
-		for (final Ejb3StatisticModel detail : ejb3Details) {
+	private void update(final ModelControllerClient client, final String deployment, final List<? extends Ejb3StatisticModel> models) throws IOException {
+		for (final Ejb3StatisticModel model : models) {
 			try {
 				final ModelNode operation = getEJB3ModelOperation(deployment);
 				final ModelNode response = client.execute(new OperationBuilder(operation).build());
-				final List<ModelNode> nodeList = response.get(ClientConstants.RESULT).get(detail.getEjbType().getName()).asList();		
+				final List<ModelNode> nodeList = response.get(ClientConstants.RESULT).get(model.getEjbType().getName()).asList();		
 				for (final ModelNode node : nodeList) {
-					if (node.hasDefined(detail.getBeanName())) {
-						detail.setKeyValues(extractClassStatistics(node, detail.getBeanName(), detail.getKeys()));
-						detail.setMethodValues(extractMethodsStatistics(node, detail.getBeanName(), detail.getMethods()));
+					if (node.hasDefined(model.getBeanName())) {
+						updateClassStatistics(node, model);
+						updateMethodsStatistics(node, model);
 					}
 		        }	
 			} catch (final IllegalArgumentException ex) {
@@ -54,60 +55,50 @@ public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends
 		return operation;
 	}
 		
-	private String[] extractClassStatistics(final ModelNode node, final String beanName, final String[] keys) {
-		String[] values = null;
-		if (keys != null) {
-			values = new String[keys.length];
-			for (int i = 0; i < keys.length; i++) {
-				values[i] = node.get(beanName).get(keys[i]).toString();
+	private void updateClassStatistics(final ModelNode node, final Ejb3StatisticModel model) {
+		if (model.getKeys() != null) {
+			for (final String key : model.getKeys()) {
+				model.addClassStatistics(key, node.get(model.getBeanName()).get(key).toString());
 			}
 		} else {
-			final ModelNode beanNode = node.get(beanName);
-			values = new String[beanNode.asPropertyList().size()];
+			final ModelNode beanNode = node.get(model.getBeanName());
 			for (int i = 0; i < beanNode.asPropertyList().size(); i++) {
 				final org.jboss.dmr.Property prop = beanNode.asPropertyList().get(i);
 				if (!prop.getName().equals("methods")) {
-					values[i] = prop.getValue().toString();
+					model.addClassStatistics(prop.getName(), prop.getValue().toString());
 				}
 			}
 		}
-		return values;
 	}
 	
-	private String[] extractMethodsStatistics(final ModelNode node, final String beanName, final String[] methods) {
-		if (methods != null) {
-			final String[] methodsStatArray = new String[methods.length];
-			if (methods != null) {
-				final ModelNode methodNode = node.get(beanName).get("methods");		
-				for (int i = 0; i < methods.length; i++) {
-					try {
-						methodsStatArray[i] =  String.format("%d:%d:%d", 
-								methodNode.get(methods[i]).get("execution-time").asLong(), 
-								methodNode.get(methods[i]).get("invocations").asLong(), 
-								methodNode.get(methods[i]).get("wait-time").asLong());
-					} catch (final IllegalArgumentException ex) {
-						// TODO log this
-						methodsStatArray[i]= "::";
-					}
-				}
-			}
-			return methodsStatArray;
-		} else {
-			final List<ModelNode> methodList = node.get(beanName).get("methods").asList();
-			final String[] methodsStatArray = new String[methodList.size()];
-			for (int i = 0; i < methodsStatArray.length; i++) {
+	private void updateMethodsStatistics(final ModelNode node, final Ejb3StatisticModel model) {
+		if (model.getMethods() != null) {			
+			final ModelNode methodNode = node.get(model.getBeanName()).get("methods");		
+			for (final String methodName : model.getMethods()) {
 				try {
-					methodsStatArray[i] =  String.format("%d:%d:%d", 
-							methodList.get(i).get("execution-time").asLong(), 
-							methodList.get(i).get("invocations").asLong(), 
-							methodList.get(i).get("wait-time").asLong());
+					model.addMethodStatistics(methodName, 
+						methodNode.get(methodName).get(Ejb3MethodStatistics.EXECUTION_TIME).asString(), 
+						methodNode.get(methodName).get(Ejb3MethodStatistics.INVOCATIONS).asString(), 
+						methodNode.get(methodName).get(Ejb3MethodStatistics.WAIT_TIME).asString());
 				} catch (final IllegalArgumentException ex) {
 					// TODO log this
-					methodsStatArray[i]= "::";
+					model.addMethodStatistics(methodName, "", "", "");
+				}
+			}			
+		} else {
+			final List<Property> methodList = node.get(model.getBeanName()).get("methods").asPropertyList();
+			for (final Property prop : methodList) {
+				final String methodName = prop.getName();
+				try {					
+					model.addMethodStatistics(methodName, 
+							prop.getValue().get(Ejb3MethodStatistics.EXECUTION_TIME).asString(), 
+							prop.getValue().get(Ejb3MethodStatistics.INVOCATIONS).asString(), 
+							prop.getValue().get(Ejb3MethodStatistics.WAIT_TIME).asString());
+				} catch (final IllegalArgumentException ex) {
+					// TODO log this
+					model.addMethodStatistics(methodName, "", "", "");
 				}
 			}
-	
-			return methodsStatArray;
 		}
 	}
 

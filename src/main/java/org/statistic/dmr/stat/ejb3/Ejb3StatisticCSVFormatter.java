@@ -49,30 +49,54 @@ public class Ejb3StatisticCSVFormatter implements IDmrStatisticFormatter<List<? 
 		buffer.append(value);
 	}
 	
-	private void formatKeyValues(final Ejb3StatisticModel detail, final StringBuffer buf) {
-		if (detail.getKeyValues() != null) {
-			for (final String value : detail.getKeyValues()) {
-				add(buf, value, _SEPARATOR);
+	private void formatKeyValues(final Ejb3StatisticModel model, final StringBuffer buf) {	
+		if (model.getKeys() != null) {
+			for (final String key : model.getKeys()) {
+				final String value = model.getClassStatistics().get(key);
+				if (value == null) {
+					add(buf, "", _SEPARATOR);
+				} else {
+					add(buf, value, _SEPARATOR);
+				}
 			}
 		} else {
-			for (int i = 0; i < detail.getKeys().length; i++) {
-				add(buf, "", _SEPARATOR);
+			for (final String key : model.getClassStatistics().keySet()) {
+				final String value = model.getClassStatistics().get(key);
+				if (value == null) {
+					add(buf, "", _SEPARATOR);
+				} else {
+					add(buf, value, _SEPARATOR);
+				}
 			}
 		}
 	}
 	
-	private void formatMethodValues(final Ejb3StatisticModel detail, final StringBuffer buf) {
-		if (detail.getMethodValues() != null) {
-			for (final String value : detail.getMethodValues()) {
-				for (String stat : value.split(":", -1)) {
-					add(buf, stat, _SEPARATOR);
+	private void formatMethodValues(final Ejb3StatisticModel model, final StringBuffer buf) {
+		if (model.getMethods() != null) {
+			for (final String methodName : model.getMethods()) {
+				final Ejb3MethodStatistics methodStat = model.getMethodStatistics().get(methodName);
+				if (methodStat == null) {
+					add(buf, "", _SEPARATOR);
+					add(buf, "", _SEPARATOR);
+					add(buf, "", _SEPARATOR);
+				} else {
+					add(buf, methodStat.getExecutionTime(), _SEPARATOR);
+					add(buf, methodStat.getInvocations(), _SEPARATOR);
+					add(buf, methodStat.getWaitTime(), _SEPARATOR);
 				}
 			}
 		} else {
-			for (int i = 0; i < detail.getMethods().length; i++) {
-				add(buf, "", _SEPARATOR);
-				add(buf, "", _SEPARATOR);
-				add(buf, "", _SEPARATOR);
+			for (final String methodName : model.getMethodStatistics().keySet()) {
+				final Ejb3MethodStatistics methodStat = model.getMethodStatistics().get(methodName);
+				if (methodStat == null) {
+					add(buf, "", _SEPARATOR);
+					add(buf, "", _SEPARATOR);
+					add(buf, "", _SEPARATOR);
+				} else {
+					add(buf, methodStat.getExecutionTime(), _SEPARATOR);
+					add(buf, methodStat.getInvocations(), _SEPARATOR);
+					add(buf, methodStat.getWaitTime(), _SEPARATOR);
+				}
 			}
 		}
 	}

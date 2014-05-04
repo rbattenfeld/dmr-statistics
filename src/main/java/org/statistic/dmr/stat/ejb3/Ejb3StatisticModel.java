@@ -1,6 +1,8 @@
 package org.statistic.dmr.stat.ejb3;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.simpleframework.xml.Attribute;
 
@@ -25,11 +27,9 @@ public class Ejb3StatisticModel implements Serializable {
 	@Attribute(name = "methods")
 	private final String[] _methods;
 	
-	@Attribute(name = "keyValues", required = false)
-	private String[] _keyValues;
+	private Map<String, String> _classStatisticMap = new HashMap<>();
 	
-	@Attribute(name = "methodValues", required = false)
-	private String[] _methodValues;
+	private Map<String, Ejb3MethodStatistics> _methodStatisticMap = new HashMap<>();
 	
 	/**
 	 * Constructs a new instance of the class.
@@ -70,21 +70,36 @@ public class Ejb3StatisticModel implements Serializable {
 	public EjbType getEjbType() {
 		return _type;
 	}
-
-	public String[] getKeyValues() {
-		return _keyValues;
-	}
-
-	public String[] getMethodValues() {
-		return _methodValues;
-	}
-
-	public void setKeyValues(String[] keyValues) {
-		_keyValues = keyValues;
-	}
-
-	public void setMethodValues(String[] methodValues) {
-		_methodValues = methodValues;
+	
+	public void addClassStatistics(final String key, final String value) {
+		_classStatisticMap.put(key, value);
 	}
 	
+	public void addMethodStatistics(final String methodName, final String executionTime, final String invocations, final String waitTime) {
+		_methodStatisticMap.put(methodName, new Ejb3MethodStatistics(executionTime, invocations, waitTime));
+	}
+	
+	public Map<String, String> getClassStatistics() {
+		return _classStatisticMap;
+	}
+	
+	public Map<String, Ejb3MethodStatistics> getMethodStatistics() {
+		return _methodStatisticMap;
+	}
+		
+	public String toString() {
+		final StringBuffer buf = new StringBuffer();
+	   	buf.append(String.format("%-25s : %s\n", "Bean", getBeanName()));
+	   	
+	   	for (final Map.Entry<String, String> entry : _classStatisticMap.entrySet()) {
+	   		buf.append(String.format("%-25s : %s\n", entry.getKey(), entry.getValue()));
+	   	}
+	   	
+	   	for (final Map.Entry<String, Ejb3MethodStatistics> entry : _methodStatisticMap.entrySet()) {
+	   		buf.append(String.format("%-25s : %s\n", entry.getKey() + " executionTime", entry.getValue().getExecutionTime()));
+	   		buf.append(String.format("%-25s : %s\n", entry.getKey() + " invocations", entry.getValue().getInvocations()));
+	   		buf.append(String.format("%-25s : %s\n", entry.getKey() + " waitTime", entry.getValue().getWaitTime()));
+	   	}   	
+   	    return buf.toString();
+    }
 }
