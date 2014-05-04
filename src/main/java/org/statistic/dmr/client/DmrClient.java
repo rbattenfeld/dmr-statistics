@@ -54,6 +54,41 @@ public class DmrClient implements Closeable {
 		}
 	}
 	
+
+//	/subsystem=logging/file-handler=fh:add(level=INFO, file={"relative-to"=>"jboss.server.log.dir", "path"=>"fh.log"}, append=false, autoflush=true)
+//	/subsystem=logging/logger=org.your.company:add(use-parent-handlers=false,handlers=\["fh"\])
+	
+	public void enableStatisticLogFile(final ModelControllerClient client, final String logFileName) {
+//		try {
+//			
+//			final ModelNode request = new ModelNode();
+//			request.get(ClientConstants.OP_ADDR).add(ClientConstants.SUBSYSTEM, "logging");
+//			request.get(ClientConstants.OP).set(ClientConstants.WRITE_ATTRIBUTE_OPERATION);
+//			request.get(ClientConstants.ADD).add("file-handler", "fhxx");
+//			request.get(ClientConstants.OP_ADDR).add("file-handler", "fhxx");
+//			request.get("level").set("INFO");
+//			request.get("file").add("relative-to", "jboss.server.log.dir");
+//			request.get("file").add("path", logFileName);
+//			request.get("append").set("false");
+//			request.get("autoflush").set("true");
+			
+//			_Logger.info(op.toJSONString(false));
+//			
+//			final ModelNode response = client.execute(op);
+//			reportFailure(response);
+			
+//			final ModelNode request2 = new ModelNode();
+//			request2.get(ClientConstants.OP_ADDR).add(ClientConstants.SUBSYSTEM, "logging");
+//			request2.get("logger", "org.statistic.dmr");
+//			request2.get("use-parent-handlers").add("false");
+//			request2.get("handlers").add("STATFILE");
+//			final ModelNode response2 = client.execute(request2);
+////			reportFailure(response2);
+//		} catch (IOException ex) {
+//			throw new RuntimeException(ex.getMessage(), ex);
+//		}				
+	}
+	
 	@Override
 	public void close() throws IOException {
 		if (_client != null) {

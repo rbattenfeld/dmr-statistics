@@ -11,6 +11,7 @@ public class TestUtil {
 	public static JavaArchive getDeployment() {
     	final File manifestMF = new File("../dmr-statistics/src/test/resources/MANIFEST.MF"); 
     	final File statFile = new File("../dmr-statistics/src/test/resources/stat.xml"); 
+    	
     	return  ShrinkWrap.create(JavaArchive.class, "resourceMonitor.jar")
 			.addPackages(true, "org.statistic.dmr")
 			.addPackages(true, "org.simpleframework.xml")
