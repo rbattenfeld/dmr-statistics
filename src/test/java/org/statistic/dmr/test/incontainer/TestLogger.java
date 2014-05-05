@@ -27,7 +27,7 @@ public class TestLogger {
 	private final PlatformStatisticCSVFormatter _platformFormatter = new PlatformStatisticCSVFormatter();
 	private PlatformStatisticUpdater _platformStatUpdater;
 	private Ejb3StatisticUpdater _ejb3StatUpdater;
-	private DmrStatisticConfiguration _configurer;
+	private DmrStatisticConfiguration _rootModel;
 	private DmrClient _client;
 	private Timer _timer;
 
@@ -42,11 +42,11 @@ public class TestLogger {
 	  
 	public void startLogging() {
 		try {
-			_configurer = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+			_rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
 			_client = new DmrClient(true);
 			_client.enableStatisticLogFile(_client.getModelController(), "statLog.log");
 			_platformStatUpdater = new PlatformStatisticUpdater();
-			_ejb3StatUpdater = new Ejb3StatisticUpdater(_configurer.getDeploymentName());
+			_ejb3StatUpdater = new Ejb3StatisticUpdater(_rootModel.getDeploymentName());
 			updateModels();
 			logHeader();
 			startTimer();
@@ -95,22 +95,22 @@ public class TestLogger {
 	
 	private void updateModels() {
 		try {
-			_platformStatUpdater.updateModel(_client.getModelController(), _configurer.getPlatformDetailsList());
-			_ejb3StatUpdater.updateModel(_client.getModelController(),  _configurer.getEjbStatistics());
+			_platformStatUpdater.updateModel(_client.getModelController(), _rootModel);
+			_ejb3StatUpdater.updateModel(_client.getModelController(),  _rootModel);
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}		
 	}
 
 	private void logHeader() {
-		final String platformStatHeader = _platformFormatter.formatHeader(_configurer.getPlatformDetailsList());
-		final String ejb3StatHeader = _ejbFormatter.formatHeader(_configurer.getEjbStatistics());
+		final String platformStatHeader = _platformFormatter.formatHeader(_rootModel);
+		final String ejb3StatHeader = _ejbFormatter.formatHeader(_rootModel);
 		_Logger.info(ejb3StatHeader + "," + platformStatHeader);		
 	}
 	
 	private void logLine() {
-		final String platformStatLine = _platformFormatter.formatLine(_configurer.getPlatformDetailsList());
-		final String ejb3StatLine = _ejbFormatter.formatLine(_configurer.getEjbStatistics());
+		final String platformStatLine = _platformFormatter.formatLine(_rootModel);
+		final String ejb3StatLine = _ejbFormatter.formatLine(_rootModel);
 		_Logger.info(ejb3StatLine + "," + platformStatLine);		
 	}
 }

@@ -1,16 +1,15 @@
 package org.statistic.dmr.stat.ejb3;
 
-import java.util.List;
-
+import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticFormatter;
 
-public class Ejb3StatisticCSVFormatter implements IDmrStatisticFormatter<List<? extends Ejb3StatisticModel>, String> {
+public class Ejb3StatisticCSVFormatter implements IDmrStatisticFormatter<String> {
 	public static final char _SEPARATOR = ',';	
 	
 	@Override
-	public String formatHeader(final List<? extends Ejb3StatisticModel> stats) {
+	public String formatHeader(final IDmrModel model) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final Ejb3StatisticModel detail : stats) {	
+		for (final Ejb3StatisticModel detail : model.getEjbStatisticModels()) {	
 			final String beanAbbr = detail.getBeanNameAbbr();
 			if (detail.getKeys() != null) {
 				for (final String key : detail.getKeys()) {
@@ -29,9 +28,9 @@ public class Ejb3StatisticCSVFormatter implements IDmrStatisticFormatter<List<? 
 	}
 	
 	@Override
-	public String formatLine(final List<? extends Ejb3StatisticModel> stats) {
+	public String formatLine(final IDmrModel model) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final Ejb3StatisticModel detail : stats) {
+		for (final Ejb3StatisticModel detail : model.getEjbStatisticModels()) {
 			formatKeyValues(detail, buf);
 			formatMethodValues(detail, buf);
 		}		

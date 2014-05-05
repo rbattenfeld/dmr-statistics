@@ -45,30 +45,30 @@ public final class DmrStatisticsTestCase {
     
     @Test
     public void testPlatform() throws Exception {
-    	final DmrStatisticConfiguration configurer = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+    	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
     	try (final DmrClient client = new DmrClient(true)) {    		
     		final PlatformStatisticCSVFormatter formatter = new PlatformStatisticCSVFormatter();
-    		_platformStatisticExtractor.updateModel(client.getModelController(), configurer.getPlatformDetailsList());
-    		_Logger.info(formatter.formatHeader(configurer.getPlatformDetailsList()));
-    		_Logger.info(formatter.formatLine(configurer.getPlatformDetailsList()));
+    		_platformStatisticExtractor.updateModel(client.getModelController(), rootModel);
+    		_Logger.info(formatter.formatHeader(rootModel));
+    		_Logger.info(formatter.formatLine(rootModel));
     		assertEquals(
-    				formatter.formatHeader(configurer.getPlatformDetailsList()).split(", ", -1).length, 
-    				formatter.formatLine(configurer.getPlatformDetailsList()).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
     
     @Test
     public void testConfigFromResourceWithNoStatAvailable() throws Exception {
-    	final DmrStatisticConfiguration configurer = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+    	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
     	try (final DmrClient client = new DmrClient(true)) {    
     		final Ejb3StatisticCSVFormatter formatter = new Ejb3StatisticCSVFormatter();
-    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(configurer.getDeploymentName());
-    		ejb3StatExtractor.updateModel(client.getModelController(),  configurer.getEjbStatistics());   
-    		_Logger.info(formatter.formatHeader(configurer.getEjbStatistics()));
-    		_Logger.info(formatter.formatLine(configurer.getEjbStatistics()));
+    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(rootModel.getDeploymentName());
+    		ejb3StatExtractor.updateModel(client.getModelController(),  rootModel);   
+    		_Logger.info(formatter.formatHeader(rootModel));
+    		_Logger.info(formatter.formatLine(rootModel));
     		assertEquals(
-    				formatter.formatHeader(configurer.getEjbStatistics()).split(", ", -1).length, 
-    				formatter.formatLine(configurer.getEjbStatistics()).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
     
@@ -78,31 +78,31 @@ public final class DmrStatisticsTestCase {
     	_testSingleton.callMe();
     	_testSingleton.callMe();
     	_testSingleton.callMeAgain();
-    	final DmrStatisticConfiguration configurer = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+    	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
     	try (final DmrClient client = new DmrClient(true)) {    
     		final Ejb3StatisticCSVFormatter formatter = new Ejb3StatisticCSVFormatter();
-    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(configurer.getDeploymentName());
-    		ejb3StatExtractor.updateModel(client.getModelController(),  configurer.getEjbStatistics());    		
-    		_Logger.info(formatter.formatHeader(configurer.getEjbStatistics()));
-    		_Logger.info(formatter.formatLine(configurer.getEjbStatistics()));
+    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(rootModel.getDeploymentName());
+    		ejb3StatExtractor.updateModel(client.getModelController(),  rootModel);    		
+    		_Logger.info(formatter.formatHeader(rootModel));
+    		_Logger.info(formatter.formatLine(rootModel));
     		assertEquals(
-    				formatter.formatHeader(configurer.getEjbStatistics()).split(", ", -1).length, 
-    				formatter.formatLine(configurer.getEjbStatistics()).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
     
     @Test
     public void testNullDeployment() throws IOException {
     	_testBean.testMe();
-    	final DmrStatisticConfiguration configurer = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
-    	configurer.setDeploymentName("testXXXX.war");
+    	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+    	rootModel.setDeploymentName("testXXXX.war");
     	try (final DmrClient client = new DmrClient(true)) {    
     		final Ejb3StatisticCSVFormatter formatter = new Ejb3StatisticCSVFormatter();
-    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(configurer.getDeploymentName());
-    		ejb3StatExtractor.updateModel(client.getModelController(),  configurer.getEjbStatistics());      
+    		final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater(rootModel.getDeploymentName());
+    		ejb3StatExtractor.updateModel(client.getModelController(),  rootModel);      
     		assertEquals(
-    				formatter.formatHeader(configurer.getEjbStatistics()).split(", ", -1).length, 
-    				formatter.formatLine(configurer.getEjbStatistics()).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
         
@@ -113,21 +113,23 @@ public final class DmrStatisticsTestCase {
     	_testSingleton.callMe();
     	_testSingleton.callMeAgain();    	
     	try (final DmrClient client = new DmrClient(true)) {
-	    	final List<Ejb3StatisticModel> details = new ArrayList<Ejb3StatisticModel>();
+	    	final List<Ejb3StatisticModel> ejbStatModel = new ArrayList<Ejb3StatisticModel>();
 	    	final Ejb3StatisticModel testBeanDetails = new Ejb3StatisticModel("TestBean", "TestBean", EjbType.StatelessBean, null, null);    	
 	    	final Ejb3StatisticModel testSingletonDetails = new Ejb3StatisticModel("TestSingleton", "TestSingleton", EjbType.SingletonBean, null, null);
 	    	final Ejb3StatisticCSVFormatter formatter = new Ejb3StatisticCSVFormatter();
-	    	details.add(testBeanDetails);  
-	    	details.add(testSingletonDetails);
+	    	final DmrStatisticConfiguration rootModel = new DmrStatisticConfiguration();
+	    	ejbStatModel.add(testBeanDetails);  
+	    	ejbStatModel.add(testSingletonDetails);
+	    	rootModel.setEjbStatisticModels(ejbStatModel);
 	    	final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater("test.war");
-    		ejb3StatExtractor.updateModel(client.getModelController(),  details); 
+    		ejb3StatExtractor.updateModel(client.getModelController(), rootModel); 
     		
     		_Logger.info("\n" + testBeanDetails.toString());
     		_Logger.info("\n" + testSingletonDetails.toString());
     		
     		assertEquals(
-    				formatter.formatHeader(details).split(", ", -1).length, 
-    				formatter.formatLine(details).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
     
@@ -138,17 +140,19 @@ public final class DmrStatisticsTestCase {
     	_testSingleton.callMe();
     	_testSingleton.callMeAgain();    	
     	try (final DmrClient client = new DmrClient(true)) {
-	    	final List<Ejb3StatisticModel> details = new ArrayList<Ejb3StatisticModel>();
+	    	final List<Ejb3StatisticModel> ejbStatModel = new ArrayList<Ejb3StatisticModel>();
 	    	final Ejb3StatisticModel testBeanDetails = new Ejb3StatisticModel("TestBean", "TestBean", EjbType.StatelessBean, new String[] {"execution-time"}, new String[] {"testMe"});    	
 	    	final Ejb3StatisticModel testSingletonDetails = new Ejb3StatisticModel("TestSingleton", "TestSingleton", EjbType.SingletonBean, new String[] {"execution-time"}, new String[] {"callMe", "callMeAgain"});
 	    	final Ejb3StatisticCSVFormatter formatter = new Ejb3StatisticCSVFormatter();
-	    	details.add(testBeanDetails);  
-	    	details.add(testSingletonDetails);
+	    	final DmrStatisticConfiguration rootModel = new DmrStatisticConfiguration();
+	    	ejbStatModel.add(testBeanDetails);  
+	    	ejbStatModel.add(testSingletonDetails);
+	    	rootModel.setEjbStatisticModels(ejbStatModel);
 	    	final Ejb3StatisticUpdater ejb3StatExtractor = new Ejb3StatisticUpdater("test.war");
-    		ejb3StatExtractor.updateModel(client.getModelController(),  details);   
+    		ejb3StatExtractor.updateModel(client.getModelController(),  rootModel);   
     		assertEquals(
-    				formatter.formatHeader(details).split(", ", -1).length, 
-    				formatter.formatLine(details).split(", ", -1).length);
+    				formatter.formatHeader(rootModel).split(", ", -1).length, 
+    				formatter.formatLine(rootModel).split(", ", -1).length);
     	}
     }
     

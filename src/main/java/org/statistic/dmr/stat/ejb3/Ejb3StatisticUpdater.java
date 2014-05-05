@@ -8,9 +8,10 @@ import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
+import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticUpdater;
 
-public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends Ejb3StatisticModel>> {		
+public class Ejb3StatisticUpdater implements IDmrStatisticUpdater {		
 	
 	private final String _deployment;
 	
@@ -19,8 +20,8 @@ public class Ejb3StatisticUpdater implements IDmrStatisticUpdater<List<? extends
 	}
 
 	@Override
-	public void updateModel(ModelControllerClient client, List<? extends Ejb3StatisticModel> source) throws IOException {
-		update(client, _deployment, source);
+	public void updateModel(ModelControllerClient client, final IDmrModel model) throws IOException {
+		update(client, _deployment, model.getEjbStatisticModels());
 	}
 	
 	//-----------------------------------------------------------------------||

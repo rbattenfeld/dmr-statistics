@@ -1,32 +1,32 @@
 package org.statistic.dmr.stat.platform;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
+import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticUpdater;
 
-public class PlatformStatisticUpdater implements IDmrStatisticUpdater<List<? extends PlatformStatisticModel>> {
+public class PlatformStatisticUpdater implements IDmrStatisticUpdater {
 		
-	public void updateModel(final ModelControllerClient client, final List<? extends PlatformStatisticModel> platformDetails) throws IOException {
-		for (final PlatformStatisticModel details : platformDetails) {
+	public void updateModel(final ModelControllerClient client, final IDmrModel model) throws IOException {
+		for (final PlatformStatisticModel platformModel : model.getPlatformStatisticModels()) {
 			ModelNode node = null;
-			if (details.getSubType() != null && !details.getSubType().isEmpty()) {
-				node = getPlatformOperation(client, details.getType()).get(ClientConstants.RESULT).get(details.getSubType());
+			if (platformModel.getSubType() != null && !platformModel.getSubType().isEmpty()) {
+				node = getPlatformOperation(client, platformModel.getType()).get(ClientConstants.RESULT).get(platformModel.getSubType());
 			} else {
-				node = getPlatformOperation(client, details.getType()).get(ClientConstants.RESULT);
+				node = getPlatformOperation(client, platformModel.getType()).get(ClientConstants.RESULT);
 			}
 			
-			final String[] values = new String[details.getKeys().length];
-			for (int i = 0; i <  details.getKeys().length ; i++) {
-				if (node.has(details.getKeys()[i])) {
-					values[i] = node.get(details.getKeys()[i]).toString();
+			final String[] values = new String[platformModel.getKeys().length];
+			for (int i = 0; i <  platformModel.getKeys().length ; i++) {
+				if (node.has(platformModel.getKeys()[i])) {
+					values[i] = node.get(platformModel.getKeys()[i]).toString();
 				}
 			}			
-			details.setValues(values);
+			platformModel.setValues(values);
 		}
 	}
 	

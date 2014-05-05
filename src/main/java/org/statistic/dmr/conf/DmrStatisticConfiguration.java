@@ -9,45 +9,57 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
 import org.statistic.dmr.stat.platform.PlatformStatisticModel;
 
 @Root
-public class DmrStatisticConfiguration {
+public class DmrStatisticConfiguration implements IDmrModel {
 	
 	@Attribute(name = "deploymentName")
 	private String _deploymentName;
 	
 	@ElementList(entry = "ejbStatistics", inline = true)
-	private List<Ejb3StatisticModel> _ejbStatisticDetailList;
+	private List<Ejb3StatisticModel> _ejbStatisticModels;
 
 	@ElementList(entry = "platformStatistics", inline = true)
-	private List<PlatformStatisticModel> _platformDetailsList;
+	private List<PlatformStatisticModel> _platformStatisticModels;
 	
 	public String getDeploymentName() {
 		return _deploymentName;
 	}
 
+	@Override
 	public void setDeploymentName(final String deploymentName) {
 		_deploymentName = deploymentName;
 	}
 
-	public List<Ejb3StatisticModel> getEjbStatistics() {
-		return _ejbStatisticDetailList;
+	@Override
+	public List<Ejb3StatisticModel> getEjbStatisticModels() {
+		return _ejbStatisticModels;
 	}
 
-	public void setEjbStatisticDetailList(final List<Ejb3StatisticModel> getEjbStatistics) {
-		_ejbStatisticDetailList = getEjbStatistics;
-	}
-	
-	public List<PlatformStatisticModel> getPlatformDetailsList() {
-		return _platformDetailsList;
+	@Override
+	public void setEjbStatisticModels(final List<Ejb3StatisticModel> ejbStatisticModels) {
+		_ejbStatisticModels = ejbStatisticModels;
 	}
 
-	public void setPlatformDetailsList(final List<PlatformStatisticModel> platformDetailsList) {
-		_platformDetailsList = platformDetailsList;
+	@Override
+	public List<PlatformStatisticModel> getPlatformStatisticModels() {
+		return _platformStatisticModels;
 	}
 
+	@Override
+	public void setPlatformStatisticModels(final List<PlatformStatisticModel> platformStatisticModels) {
+		_platformStatisticModels = platformStatisticModels;
+	}
+
+	/**
+	 * Returns a <code>DmrStatisticConfiguration</code> instance read from the given resource file.
+	 * @param resourceName
+	 * @return
+	 * @throws IOException
+	 */
 	public static DmrStatisticConfiguration loadFromResource(final String resourceName) throws IOException {
 		final Serializer serializer = new Persister();
 		final InputStream resourceStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);

@@ -33,8 +33,8 @@ public class TestDeSerializer {
     	platformDetails.add(osDetails);
     	
     	configurer.setDeploymentName("test.war");
-    	configurer.setEjbStatisticDetailList(details);
-    	configurer.setPlatformDetailsList(platformDetails);
+    	configurer.setEjbStatisticModels(details);
+    	configurer.setPlatformStatisticModels(platformDetails);
     	final Serializer serializer = new Persister();
     	final File file = new File("stat.xml");
         serializer.write(configurer, file);

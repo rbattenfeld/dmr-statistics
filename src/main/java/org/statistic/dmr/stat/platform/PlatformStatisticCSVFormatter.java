@@ -1,17 +1,16 @@
 package org.statistic.dmr.stat.platform;
 
-import java.util.List;
-
+import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticFormatter;
 
-public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<List<? extends PlatformStatisticModel>, String> {
+public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<String> {
 	public static final char _SEPARATOR = ',';	
 	
 
 	@Override
-	public String formatHeader(List<? extends PlatformStatisticModel> source) {
+	public String formatHeader(final IDmrModel model) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final PlatformStatisticModel detail : source) {	
+		for (final PlatformStatisticModel detail : model.getPlatformStatisticModels()) {	
 			final String type = detail.getType();
 			final String subType = detail.getSubType();
 			for (final String key : detail.getKeys()) {
@@ -22,9 +21,9 @@ public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<Lis
 	}
 
 	@Override
-	public String formatLine(List<? extends PlatformStatisticModel> source) {
+	public String formatLine(final IDmrModel model) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final PlatformStatisticModel detail : source) {
+		for (final PlatformStatisticModel detail : model.getPlatformStatisticModels()) {
 			for (final String value : detail.getValues()) {
 				add(buf, value, _SEPARATOR);
 			}
