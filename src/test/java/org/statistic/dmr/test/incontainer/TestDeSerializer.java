@@ -33,6 +33,8 @@ public class TestDeSerializer {
     	platformDetails.add(osDetails);
     	
     	configurer.setDeploymentName("test.war");
+    	configurer.setCsvSeparator(';');
+    	configurer.setLogCategory("ejb3stat");
     	configurer.setEjbStatisticModels(details);
     	configurer.setPlatformStatisticModels(platformDetails);
     	final Serializer serializer = new Persister();

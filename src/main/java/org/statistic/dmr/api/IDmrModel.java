@@ -10,6 +10,14 @@ public interface IDmrModel {
 	public String getDeploymentName();
 
 	public void setDeploymentName(final String deploymentName);
+	
+	public void setLogCategory(final String deploymentName);
+	
+	public String getLogCategory();
+
+	public void setCsvSeparator(final char csvSeparator);
+
+	public char getCsvSeparator();
 
 	public List<Ejb3StatisticModel> getEjbStatisticModels();
 

@@ -7,10 +7,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.statistic.dmr.logger.ejb.EjbSingletonLogger;
+import org.statistic.dmr.logger.DefaultEjbStatisticLogger;
 
 @RunWith(Arquillian.class)
-public final class PeriodicLoggerTestCase {
+public final class DefaultStatisticLoggerTestCase {
 	
     @Deployment
     public static JavaArchive createDeployment() {
@@ -23,13 +23,13 @@ public final class PeriodicLoggerTestCase {
     @EJB(mappedName = "java:app/resourceMonitor/TestSingleton!org.statistic.dmr.test.incontainer.TestSingleton")
     private TestSingleton _testSingleton;
          
-    @EJB(mappedName = "java:app/resourceMonitor/EjbSingletonLogger!org.statistic.dmr.logger.ejb.EjbSingletonLogger")
-    private EjbSingletonLogger _statisticLogger;
+    @EJB(mappedName = "java:app/resourceMonitor/DefaultStatisticLogger!org.statistic.dmr.logger.ejb.DefaultStatisticLogger")
+    private DefaultEjbStatisticLogger _statisticLogger;
     
     @Test
     public void testPeriodicLogger() throws Exception {
-    	_statisticLogger.startLogging();
-    	for (int i = 0; i < 10; i++) {
+    	_statisticLogger.startLogging("META-INF/stat.xml");
+    	for (int i = 0; i < 100; i++) {
     		_testBean.testMe();
         	_testSingleton.callMe();
         	_testSingleton.callMe();

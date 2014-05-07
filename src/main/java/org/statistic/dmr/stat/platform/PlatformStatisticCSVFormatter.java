@@ -3,9 +3,7 @@ package org.statistic.dmr.stat.platform;
 import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticFormatter;
 
-public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<String> {
-	public static final char _SEPARATOR = ',';	
-	
+public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<String> {	
 
 	@Override
 	public String formatHeader(final IDmrModel model) {
@@ -14,7 +12,7 @@ public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<Str
 			final String type = detail.getType();
 			final String subType = detail.getSubType();
 			for (final String key : detail.getKeys()) {
-				add(buf, getHeader(type, subType) + "-" + key, _SEPARATOR);
+				add(buf, getHeader(type, subType) + "-" + key, model.getCsvSeparator());
 			}
 		}		
 		return buf.toString();
@@ -25,7 +23,7 @@ public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<Str
 		final StringBuffer buf = new StringBuffer();		
 		for (final PlatformStatisticModel detail : model.getPlatformStatisticModels()) {
 			for (final String value : detail.getValues()) {
-				add(buf, value, _SEPARATOR);
+				add(buf, value, model.getCsvSeparator());
 			}
 		}		
 		return buf.toString();

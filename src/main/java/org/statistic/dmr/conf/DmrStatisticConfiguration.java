@@ -19,6 +19,12 @@ public class DmrStatisticConfiguration implements IDmrModel {
 	@Attribute(name = "deploymentName")
 	private String _deploymentName;
 	
+	@Attribute(name = "logCategory")
+	private String _logCategory;
+	
+	@Attribute(name = "csvSeparator")
+	private char _csvSeparator;
+	
 	@ElementList(entry = "ejbStatistics", inline = true)
 	private List<Ejb3StatisticModel> _ejbStatisticModels;
 
@@ -32,6 +38,26 @@ public class DmrStatisticConfiguration implements IDmrModel {
 	@Override
 	public void setDeploymentName(final String deploymentName) {
 		_deploymentName = deploymentName;
+	}
+
+	@Override
+	public String getLogCategory() {
+		return _logCategory;
+	}
+
+	@Override
+	public void setLogCategory(final String logCategory) {
+		_logCategory = logCategory;
+	}
+
+	@Override
+	public char getCsvSeparator() {
+		return _csvSeparator;
+	}
+
+	@Override
+	public void setCsvSeparator(final char csvSeparator) {
+		_csvSeparator = csvSeparator;
 	}
 
 	@Override
@@ -69,4 +95,5 @@ public class DmrStatisticConfiguration implements IDmrModel {
 			throw new IOException(ex);
 		}
 	}
+
 }
