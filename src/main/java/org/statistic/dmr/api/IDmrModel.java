@@ -2,6 +2,7 @@ package org.statistic.dmr.api;
 
 import java.util.List;
 
+import org.statistic.dmr.stat.datasource.DatasourceStatisticModel;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
 import org.statistic.dmr.stat.platform.PlatformStatisticModel;
 
@@ -26,4 +27,9 @@ public interface IDmrModel {
 	public List<PlatformStatisticModel> getPlatformStatisticModels();
 
 	public void setPlatformStatisticModels(final List<PlatformStatisticModel> platformStatisticModels);
+	
+	public List<DatasourceStatisticModel> getDataSourceStatisticModels();
+
+	public void setDataSourceStatisticModels(final List<DatasourceStatisticModel> datasourceStatisticModels);
+	
 }

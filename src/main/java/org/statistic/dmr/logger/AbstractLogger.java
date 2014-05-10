@@ -10,6 +10,8 @@ import org.statistic.dmr.api.IDmrStatisticFormatter;
 import org.statistic.dmr.api.IDmrStatisticUpdater;
 import org.statistic.dmr.client.DmrClient;
 import org.statistic.dmr.conf.DmrStatisticConfiguration;
+import org.statistic.dmr.stat.datasource.DataSourcesStatisticCSVFormatter;
+import org.statistic.dmr.stat.datasource.DatasourceStatisticUpdater;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticCSVFormatter;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticUpdater;
 import org.statistic.dmr.stat.platform.PlatformStatisticCSVFormatter;
@@ -76,7 +78,11 @@ public abstract class AbstractLogger {
 			if (_rootModel.getPlatformStatisticModels() != null && !_rootModel.getPlatformStatisticModels().isEmpty()) {
 				_updaters.add(new PlatformStatisticUpdater());
 				_formatters.add(new PlatformStatisticCSVFormatter());
-			}					
+			}
+			if (_rootModel.getDataSourceStatisticModels() != null && !_rootModel.getDataSourceStatisticModels().isEmpty()) {
+				_updaters.add(new DatasourceStatisticUpdater());
+				_formatters.add(new DataSourcesStatisticCSVFormatter());
+			}	
 			updateModels();
 			logHeader();
 		} catch (IOException ex) {

@@ -29,7 +29,7 @@ public final class DefaultStatisticLoggerTestCase {
     @Test
     public void testPeriodicLogger() throws Exception {
     	_statisticLogger.startLogging("META-INF/stat.xml");
-    	for (int i = 0; i < 100; i++) {
+    	for (int i = 0; i < 20; i++) {
     		_testBean.testMe();
         	_testSingleton.callMe();
         	_testSingleton.callMe();

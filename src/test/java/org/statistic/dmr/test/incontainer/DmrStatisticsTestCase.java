@@ -18,6 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.statistic.dmr.client.DmrClient;
 import org.statistic.dmr.conf.DmrStatisticConfiguration;
+import org.statistic.dmr.stat.datasource.DataSourcesStatisticCSVFormatter;
+import org.statistic.dmr.stat.datasource.DatasourceStatisticModel;
+import org.statistic.dmr.stat.datasource.DatasourceStatisticUpdater;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticCSVFormatter;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticUpdater;
@@ -40,15 +43,43 @@ public final class DmrStatisticsTestCase {
     @EJB(mappedName = "java:app/resourceMonitor/TestSingleton!com.swx.ptp.kernel.statistic.test.incontainer.dmr.TestSingleton")
     private TestSingleton _testSingleton;
         
-    @Inject
-    private PlatformStatisticUpdater _platformStatisticExtractor;
+//    @Inject
+//    private PlatformStatisticUpdater _platformStatisticExtractor;
+    
+    @Test
+    public void testDataSource() throws Exception {
+    	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
+    	try (final DmrClient client = new DmrClient(true)) {  
+	    	final DatasourceStatisticUpdater updater = new DatasourceStatisticUpdater();	    	
+	    		final DataSourcesStatisticCSVFormatter formatter = new DataSourcesStatisticCSVFormatter();
+	    		updater.updateModel(client.getModelController(), rootModel);
+	    		_Logger.info(formatter.formatHeader(rootModel));
+	    		_Logger.info(formatter.formatLine(rootModel));	  
+    	}
+    }
+    
+    @Test
+    public void testDataSourceManual() throws Exception {
+    	final DatasourceStatisticModel model = new DatasourceStatisticModel();
+    	final List<DatasourceStatisticModel> models = new ArrayList<DatasourceStatisticModel>();
+    	model.setDatasource("ExampleDS");
+    	model.setJdbcKeys(new String[] {"PreparedStatementCacheAccessCount", "PreparedStatementCacheHitCount", "PreparedStatementCacheMissCount"});
+    	model.setPoolKeys(new String[] {"ActiveCount", "AvailableCount", "InUseCount", "MaxUsedCount", "MaxWaitCount",  "MaxWaitTime"});
+    	models.add(model);
+    	final DatasourceStatisticUpdater updater = new DatasourceStatisticUpdater();
+    	try (final DmrClient client = new DmrClient(true)) {
+    		updater.updateModel(client.getModelController(), models);
+    		_Logger.info(model);
+    	}
+    }
     
     @Test
     public void testPlatform() throws Exception {
     	final DmrStatisticConfiguration rootModel = DmrStatisticConfiguration.loadFromResource("META-INF/stat.xml");
-    	try (final DmrClient client = new DmrClient(true)) {    		
+    	try (final DmrClient client = new DmrClient(true)) {  
+    		final PlatformStatisticUpdater platformStatisticExtractor = new PlatformStatisticUpdater();
     		final PlatformStatisticCSVFormatter formatter = new PlatformStatisticCSVFormatter();
-    		_platformStatisticExtractor.updateModel(client.getModelController(), rootModel);
+    		platformStatisticExtractor.updateModel(client.getModelController(), rootModel);
     		_Logger.info(formatter.formatHeader(rootModel));
     		_Logger.info(formatter.formatLine(rootModel));
     		assertEquals(

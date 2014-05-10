@@ -10,6 +10,7 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.statistic.dmr.api.IDmrModel;
+import org.statistic.dmr.stat.datasource.DatasourceStatisticModel;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
 import org.statistic.dmr.stat.platform.PlatformStatisticModel;
 
@@ -30,6 +31,9 @@ public class DmrStatisticConfiguration implements IDmrModel {
 
 	@ElementList(entry = "platformStatistics", inline = true)
 	private List<PlatformStatisticModel> _platformStatisticModels;
+	
+	@ElementList(entry = "datasourceStatistics", inline = true)
+	private List<DatasourceStatisticModel> _datasourceStatisticModels;
 	
 	public String getDeploymentName() {
 		return _deploymentName;
@@ -80,6 +84,17 @@ public class DmrStatisticConfiguration implements IDmrModel {
 		_platformStatisticModels = platformStatisticModels;
 	}
 
+
+	@Override
+	public List<DatasourceStatisticModel> getDataSourceStatisticModels() {
+		return _datasourceStatisticModels;
+	}
+
+	@Override
+	public void setDataSourceStatisticModels(final List<DatasourceStatisticModel> datasourceStatisticModels) {
+		_datasourceStatisticModels = datasourceStatisticModels;
+	}
+	
 	/**
 	 * Returns a <code>DmrStatisticConfiguration</code> instance read from the given resource file.
 	 * @param resourceName
@@ -95,5 +110,4 @@ public class DmrStatisticConfiguration implements IDmrModel {
 			throw new IOException(ex);
 		}
 	}
-
 }
