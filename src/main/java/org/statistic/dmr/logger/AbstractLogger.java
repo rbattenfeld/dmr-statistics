@@ -70,8 +70,9 @@ public abstract class AbstractLogger {
 		try {
 			_rootModel = DmrStatisticConfiguration.loadFromResource(configResourcePath);
 			_statisticCategoryLogger = LogFactory.getLog(_rootModel.getLogCategory());
-			_client = new DmrClient(true);
+			_client = new DmrClient();
 			if (_rootModel.getEjbStatisticModels() != null && !_rootModel.getEjbStatisticModels().isEmpty()) {
+				_client.enableEjb3Statistics(true);
 				_updaters.add(new Ejb3StatisticUpdater(_rootModel.getDeploymentName()));
 				_formatters.add(new Ejb3StatisticCSVFormatter());
 			}	

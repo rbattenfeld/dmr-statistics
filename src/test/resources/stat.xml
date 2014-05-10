@@ -1,8 +1,23 @@
-<dmrStatisticConfiguration deploymentName="test.war" logCategory="ejb3stat" csvSeparator=";">
-   <ejbStatistics beanName="TestBean" beanNameAbbr="T1" type="StatelessBean" keys="execution-time" methods="testMe"/>
-   <ejbStatistics beanName="TestSingleton" beanNameAbbr="T2" type="SingletonBean" keys="execution-time" methods="callMe, callMeAgain"/>
-   <platformStatistics type="memory" subType="heap-memory-usage" keys="init, used, committed, max"/>
-   <platformStatistics type="memory" subType="non-heap-memory-usage" keys="init, used, committed, max"/>
-   <platformStatistics type="operating-system" subType="" keys="available-processors, system-load-average"/>
-   <datasourceStatistics datasource="ExampleDS" jdbckeys="PreparedStatementCacheAccessCount, PreparedStatementCacheHitCount, PreparedStatementCacheMissCount" poolkeys="ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime"/>
-</dmrStatisticConfiguration>
+<dmr-statistic deploymentName="test.war" logCategory="ejb3stat" csvSeparator=";">
+   <ejb name="TestBean" abbr="T1" type="StatelessBean">
+      <keys length="1">execution-time</keys>
+      <methods length="1">testMe</methods>
+   </ejb>
+   <ejb name="TestSingleton" abbr="T2" type="SingletonBean">
+      <keys length="1">execution-time</keys>
+      <methods length="2">callMe, callMeAgain</methods>
+   </ejb>
+   <platform type="memory" sub-type="heap-memory-usage">
+      <keys length="4">init, used, committed, max</keys>
+   </platform>
+   <platform type="memory" sub-type="non-heap-memory-usage">
+      <keys length="4">init, used, committed, max</keys>
+   </platform>
+   <platform type="operating-system" sub-type="">
+      <keys length="2">available-processors, system-load-average</keys>
+   </platform>
+   <datasource name="ExampleDS">
+      <jdbc length="3">PreparedStatementCacheAccessCount, PreparedStatementCacheHitCount, PreparedStatementCacheMissCount</jdbc>
+      <pool length="6">ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime</pool>
+   </datasource>
+</dmr-statistic>

@@ -18,15 +18,10 @@ public class PlatformStatisticUpdater implements IDmrStatisticUpdater {
 				node = getPlatformOperation(client, platformModel.getType()).get(ClientConstants.RESULT).get(platformModel.getSubType());
 			} else {
 				node = getPlatformOperation(client, platformModel.getType()).get(ClientConstants.RESULT);
-			}
-			
-			final String[] values = new String[platformModel.getKeys().length];
-			for (int i = 0; i <  platformModel.getKeys().length ; i++) {
-				if (node.has(platformModel.getKeys()[i])) {
-					values[i] = node.get(platformModel.getKeys()[i]).toString();
-				}
 			}			
-			platformModel.setValues(values);
+			for (String key : platformModel.getKeys()) {
+				platformModel.addStatistics(key, node.get(key));
+			}
 		}
 	}
 	

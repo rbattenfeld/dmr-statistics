@@ -47,7 +47,7 @@ public class DatasourceStatisticUpdater implements IDmrStatisticUpdater {
 		return operation;
 	}
 		
-	private void updateStatistics(final ModelNode poolNode, final String[] keys, final Map<String, String> valuesMap) {
+	private void updateStatistics(final ModelNode poolNode, final String[] keys, final Map<String, Object> valuesMap) {
 		if (keys != null) {
 			for (final String key : keys) {
 				valuesMap.put(key, poolNode.get(key).toString());
@@ -55,7 +55,7 @@ public class DatasourceStatisticUpdater implements IDmrStatisticUpdater {
 		} else {
 			for (int i = 0; i < poolNode.asPropertyList().size(); i++) {
 				final org.jboss.dmr.Property prop = poolNode.asPropertyList().get(i);
-				valuesMap.put(prop.getName(), prop.getValue().toString());
+				valuesMap.put(prop.getName(), prop.getValue());
 			}
 		}
 	}

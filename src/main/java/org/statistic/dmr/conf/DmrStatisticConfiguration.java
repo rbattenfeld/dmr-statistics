@@ -14,7 +14,7 @@ import org.statistic.dmr.stat.datasource.DatasourceStatisticModel;
 import org.statistic.dmr.stat.ejb3.Ejb3StatisticModel;
 import org.statistic.dmr.stat.platform.PlatformStatisticModel;
 
-@Root
+@Root(name = "dmr-statistic")
 public class DmrStatisticConfiguration implements IDmrModel {
 	
 	@Attribute(name = "deploymentName")
@@ -26,13 +26,13 @@ public class DmrStatisticConfiguration implements IDmrModel {
 	@Attribute(name = "csvSeparator")
 	private char _csvSeparator;
 	
-	@ElementList(entry = "ejbStatistics", inline = true)
+	@ElementList(entry = "ejb", inline = true)
 	private List<Ejb3StatisticModel> _ejbStatisticModels;
 
-	@ElementList(entry = "platformStatistics", inline = true)
+	@ElementList(entry = "platform", inline = true)
 	private List<PlatformStatisticModel> _platformStatisticModels;
 	
-	@ElementList(entry = "datasourceStatistics", inline = true)
+	@ElementList(entry = "datasource", inline = true)
 	private List<DatasourceStatisticModel> _datasourceStatisticModels;
 	
 	public String getDeploymentName() {

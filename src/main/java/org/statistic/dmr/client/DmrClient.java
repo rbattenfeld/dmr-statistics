@@ -17,37 +17,77 @@ public class DmrClient implements Closeable {
 	private static final String _JBOSS_NODE_PORT = System.getProperty("jboss.node.port", "9990");
 	private final ModelControllerClient _client;
 	
+	/**
+	 * Creates a new instance by connecting to the default host and port configured through the system properties
+	 * <code>jboss.node.host</code> and <code>jboss.node.port</code>.
+	 * 
+	 * @throws UnknownHostException if a connection error occurs.
+	 */
 	public DmrClient() throws UnknownHostException {
 		_client = connect(_JBOSS_NODE_HOST, Integer.valueOf(_JBOSS_NODE_PORT));
 	}
 	
-	public DmrClient(final boolean enableEjb3Statistics) throws UnknownHostException {
-		_client = connect(_JBOSS_NODE_HOST, Integer.valueOf(_JBOSS_NODE_PORT));
-		if (enableEjb3Statistics) {
-			enableEjb3Statistics(_client);
-		}
-	}
-	
+	/**
+	 * Creates a new instance by connecting to the given host and port settings.
+	 * 
+	 * @param host the application server host.
+	 * @param port the management port the application server is listening.
+	 * @throws UnknownHostException if a connection error occurs.
+	 */
 	public DmrClient(final String host, final int port) throws UnknownHostException {
 		_client = connect(host, port);
 	}
 	
+	/**
+	 * Returns the controller.
+	 * @return
+	 */
 	public ModelControllerClient getModelController() {
 		return _client;
 	}
-	
-	public void enableEjb3Statistics() {
-		enableEjb3Statistics(_client);
+			
+	/**
+	 * Enables statistics on or off for those ones which are not active by default.
+	 * @param client
+	 * @param enable turns on or off statistics for currently EJB3 and Undertow.
+	 */
+	public void enableStatistics(final boolean enable) {
+		enableEjb3Statistics(enable);
+		enableUndertow(enable);
 	}
-		
-	public void enableEjb3Statistics(final ModelControllerClient client) {
+	
+	/**
+	 * Activate or deactivates EJB3 statistics.
+	 * @param client
+	 * @param enable
+	 */
+	public void enableEjb3Statistics(final boolean enable) {
 		try {
 			final ModelNode request = new ModelNode();			
 			request.get(ClientConstants.OP_ADDR).add(ClientConstants.SUBSYSTEM, "ejb3"); 
 		    request.get(ClientConstants.OP).set(ClientConstants.WRITE_ATTRIBUTE_OPERATION);
 		    request.get("name").set("enable-statistics");
-			request.get("value").set("true");
-			final ModelNode response = client.execute(request);
+			request.get("value").set(Boolean.toString(enable));
+			final ModelNode response = _client.execute(request);
+			reportFailure(response);
+		} catch (IOException ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+	}
+	
+	/**
+	 * Activate or deactivates Undertow statistics.
+	 * @param client
+	 * @param enable
+	 */
+	public void enableUndertow(final boolean enable) {
+		try {
+			final ModelNode request = new ModelNode();			
+			request.get(ClientConstants.OP_ADDR).add(ClientConstants.SUBSYSTEM, "undertow"); 
+		    request.get(ClientConstants.OP).set(ClientConstants.WRITE_ATTRIBUTE_OPERATION);
+		    request.get("name").set("statistics-enabled");
+		    request.get("value").set(Boolean.toString(enable));
+			final ModelNode response = _client.execute(request);
 			reportFailure(response);
 		} catch (IOException ex) {
 			throw new RuntimeException(ex.getMessage(), ex);

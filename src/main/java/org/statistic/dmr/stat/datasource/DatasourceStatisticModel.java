@@ -5,22 +5,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 
 public class DatasourceStatisticModel implements Serializable {
 	private static final long serialVersionUID = 7771617395302880088L;
 	
-	@Attribute(name = "datasource")
+	@Attribute(name = "name")
 	private String _datasource;	
 
-	@Attribute(name = "jdbckeys", required = false)
+	@Element(name = "jdbc", required = false)
 	private String[] _jdbcKeys;
 
-	@Attribute(name = "poolkeys", required = false)
+	@Element(name = "pool", required = false)
 	private String[] _poolKeys;
 
-    private Map<String, String> _jdbcStatisticMap = new HashMap<>();
+    private Map<String, Object> _jdbcStatisticMap = new HashMap<>();
 	
-	private Map<String, String> _poolStatisticMap = new HashMap<>();
+	private Map<String, Object> _poolStatisticMap = new HashMap<>();
 	
 	public String getDatasource() {
 		return _datasource;
@@ -46,19 +47,19 @@ public class DatasourceStatisticModel implements Serializable {
 		_poolKeys = poolkeys;
 	}
 	
-	public void addJdbcStatistics(final String key, final String value) {
+	public void addJdbcStatistics(final String key, final Object value) {
 		_jdbcStatisticMap.put(key, value);
 	}
 	
-	public void addPoolStatistics(final String methodName, final String value) {
+	public void addPoolStatistics(final String methodName, final Object value) {
 		_poolStatisticMap.put(methodName, value);
 	}
 	
-	public Map<String, String> getJdbcStatistics() {
+	public Map<String, Object> getJdbcStatistics() {
 		return _jdbcStatisticMap;
 	}
 	
-	public Map<String, String> getPoolStatistics() {
+	public Map<String, Object> getPoolStatistics() {
 		return _poolStatisticMap;
 	}
 	
@@ -66,11 +67,11 @@ public class DatasourceStatisticModel implements Serializable {
 		final StringBuffer buf = new StringBuffer();
 	   	buf.append(String.format("%-25s : %s\n", "DataSource", getDatasource()));
 	   	
-	   	for (final Map.Entry<String, String> entry : _poolStatisticMap.entrySet()) {
+	   	for (final Map.Entry<String, Object> entry : _poolStatisticMap.entrySet()) {
 	   		buf.append(String.format("%-25s : %s\n", "pool-" + entry.getKey(), entry.getValue()));
 	   	}
 	   	
-	   	for (final Map.Entry<String, String> entry : _jdbcStatisticMap.entrySet()) {
+	   	for (final Map.Entry<String, Object> entry : _jdbcStatisticMap.entrySet()) {
 	   		buf.append(String.format("%-25s : %s\n", "jdbc-" + entry.getKey(), entry.getValue()));
 	   	}
    	    return buf.toString();

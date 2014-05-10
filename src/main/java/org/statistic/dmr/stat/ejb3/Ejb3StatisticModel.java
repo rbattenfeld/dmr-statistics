@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 
 /**
  * This class defines the EJB3 bean statistical details which have to be extracted.
@@ -12,22 +13,22 @@ import org.simpleframework.xml.Attribute;
 public class Ejb3StatisticModel implements Serializable {
 	private static final long serialVersionUID = -1592685802037096782L;
 	
-	@Attribute(name = "beanName")
+	@Attribute(name = "name")
 	private final String _beanName;
 	
-	@Attribute(name = "beanNameAbbr")
+	@Attribute(name = "abbr")
 	private final String _beanNameAbbr;
 	
 	@Attribute(name = "type")
 	private final EjbType _type;
 	
-	@Attribute(name = "keys")
+	@Element(name = "keys")
 	private final String[] _keys;
 		
-	@Attribute(name = "methods")
+	@Element(name = "methods")
 	private final String[] _methods;
 	
-	private Map<String, String> _classStatisticMap = new HashMap<>();
+	private Map<String, Object> _classStatisticMap = new HashMap<>();
 	
 	private Map<String, Ejb3MethodStatistics> _methodStatisticMap = new HashMap<>();
 	
@@ -39,11 +40,11 @@ public class Ejb3StatisticModel implements Serializable {
 	 * @param methods defined which methods statistics to extract.
 	 */
 	public Ejb3StatisticModel(
-			@Attribute(name="beanName") final String beanName,
-			@Attribute(name="beanNameAbbr") final String beanNameAbbr,  
+			@Attribute(name="name") final String beanName,
+			@Attribute(name="abbr") final String beanNameAbbr,  
 			@Attribute(name="type") final EjbType type, 
-			@Attribute(name = "keys") final String[] keys,
-			@Attribute(name = "methods") final String[] methods) {
+			@Element(name = "keys") final String[] keys,
+			@Element(name = "methods") final String[] methods) {
 		_beanName = beanName;
 		_beanNameAbbr = beanNameAbbr;
 		_type = type;		
@@ -71,7 +72,7 @@ public class Ejb3StatisticModel implements Serializable {
 		return _type;
 	}
 	
-	public void addClassStatistics(final String key, final String value) {
+	public void addClassStatistics(final String key, final Object value) {
 		_classStatisticMap.put(key, value);
 	}
 	
@@ -79,7 +80,7 @@ public class Ejb3StatisticModel implements Serializable {
 		_methodStatisticMap.put(methodName, new Ejb3MethodStatistics(executionTime, invocations, waitTime));
 	}
 	
-	public Map<String, String> getClassStatistics() {
+	public Map<String, Object> getClassStatistics() {
 		return _classStatisticMap;
 	}
 	
@@ -91,7 +92,7 @@ public class Ejb3StatisticModel implements Serializable {
 		final StringBuffer buf = new StringBuffer();
 	   	buf.append(String.format("%-25s : %s\n", "Bean", getBeanName()));
 	   	
-	   	for (final Map.Entry<String, String> entry : _classStatisticMap.entrySet()) {
+	   	for (final Map.Entry<String, Object> entry : _classStatisticMap.entrySet()) {
 	   		buf.append(String.format("%-25s : %s\n", entry.getKey(), entry.getValue()));
 	   	}
 	   	

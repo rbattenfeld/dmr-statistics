@@ -2,6 +2,7 @@ package org.statistic.dmr.stat.platform;
 
 import org.statistic.dmr.api.IDmrModel;
 import org.statistic.dmr.api.IDmrStatisticFormatter;
+import org.statistic.dmr.stat.StatisticUtil;
 
 public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<String> {	
 
@@ -12,18 +13,18 @@ public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<Str
 			final String type = detail.getType();
 			final String subType = detail.getSubType();
 			for (final String key : detail.getKeys()) {
-				add(buf, getHeader(type, subType) + "-" + key, model.getCsvSeparator());
+				StatisticUtil.add(buf, getHeader(type, subType) + "-" + key, model.getCsvSeparator());
 			}
 		}		
 		return buf.toString();
 	}
 
 	@Override
-	public String formatLine(final IDmrModel model) {
+	public String formatLine(final IDmrModel rootModel) {
 		final StringBuffer buf = new StringBuffer();		
-		for (final PlatformStatisticModel detail : model.getPlatformStatisticModels()) {
-			for (final String value : detail.getValues()) {
-				add(buf, value, model.getCsvSeparator());
+		for (final PlatformStatisticModel model : rootModel.getPlatformStatisticModels()) {
+			for (final String key : model.getKeys()) {
+				StatisticUtil.add(buf, model.getStatisticMap().get(key), rootModel.getCsvSeparator());
 			}
 		}		
 		return buf.toString();
@@ -41,10 +42,4 @@ public class PlatformStatisticCSVFormatter implements IDmrStatisticFormatter<Str
 		}
 	}
 
-	private void add(final StringBuffer buffer, final Object value, final char separator) {
-		if (buffer.length() > 0) {
-			buffer.append(separator);
-		}
-		buffer.append(value);
-	}	
 }
