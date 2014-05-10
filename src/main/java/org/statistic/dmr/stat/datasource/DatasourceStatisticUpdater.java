@@ -18,7 +18,7 @@ public class DatasourceStatisticUpdater implements IDmrStatisticUpdater {
 		updateModel(client, model.getDataSourceStatisticModels());
 	}
 	
-	public void updateModel(final ModelControllerClient client, final List<? extends DatasourceStatisticModel> models) throws IOException {
+	public void updateModel(final ModelControllerClient client, final List<DatasourceStatisticModel> models) throws IOException {
 		for (final DatasourceStatisticModel model : models) {
 			try {
 				final ModelNode operation = getDatasourcesModelOperation(model.getDatasource());

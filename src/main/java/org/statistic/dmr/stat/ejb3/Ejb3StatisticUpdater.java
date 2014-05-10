@@ -28,7 +28,7 @@ public class Ejb3StatisticUpdater implements IDmrStatisticUpdater {
 	//-- Private Methods ----------------------------------------------------||
 	//-----------------------------------------------------------------------||
 	
-	private void update(final ModelControllerClient client, final String deployment, final List<? extends Ejb3StatisticModel> models) throws IOException {
+	private void update(final ModelControllerClient client, final String deployment, final List<Ejb3StatisticModel> models) throws IOException {
 		for (final Ejb3StatisticModel model : models) {
 			try {
 				final ModelNode operation = getEJB3ModelOperation(deployment);
