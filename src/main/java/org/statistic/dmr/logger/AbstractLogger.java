@@ -29,20 +29,10 @@ public abstract class AbstractLogger {
 	private DmrClient _client;
 	
 	/**
-	 * Starts the timer.
-	 */
-	protected abstract void startTimer();
-	
-	/**
-	 * Stops the timer.
-	 */
-	protected abstract void stopTimer();
-	
-	/**
 	 * Start this statistical logger.
 	 */
 	public void startLogging(final String configResourcePath) {
-		initAndStart(configResourcePath);
+		initialize(configResourcePath);
 		startTimer();
 	}
 		
@@ -54,19 +44,56 @@ public abstract class AbstractLogger {
 		cleanup();
 	}
 	
+    //-----------------------------------------------------------------------||
+    //-- Protected Methods --------------------------------------------------||
+    //-----------------------------------------------------------------------||
+
+	/**
+	 * Starts the timer.
+	 */
+	protected abstract void startTimer();
+	
+	/**
+	 * Stops the timer.
+	 */
+	protected abstract void stopTimer();
+	
 	/**
 	 * Updates the model and then logs a new line.
 	 */
-	public void updateAndLog() {
+	protected void logNewLine() {
+		checkState();
 		updateModels();
 		logLine();
+	}
+	
+	protected long getIntervall() {
+		checkState();
+		return _rootModel.getIntervall();
+	}
+	
+	protected void updateModels() {
+		checkState();
+		try {
+			for (final IDmrStatisticUpdater modelUpdater :_updaters) {
+				modelUpdater.updateModel(_client.getModelController(), _rootModel);
+			}
+		} catch (final IOException ex) {
+			throw new RuntimeException(ex);
+		}		
 	}
 	
     //-----------------------------------------------------------------------||
     //-- Private Methods ----------------------------------------------------||
     //-----------------------------------------------------------------------||
 	
-	private void initAndStart(final String configResourcePath) {
+	private void checkState() {
+		if (_client == null) {
+			throw new UnsupportedOperationException("Not started");
+		}
+	}
+	
+	private void initialize(final String configResourcePath) {
 		try {
 			_rootModel = DmrStatisticConfiguration.loadFromResource(configResourcePath);
 			_statisticCategoryLogger = LogFactory.getLog(_rootModel.getLogCategory());
@@ -100,17 +127,7 @@ public abstract class AbstractLogger {
 			// ignoring
 		}
 	}
-		
-	private void updateModels() {
-		try {
-			for (final IDmrStatisticUpdater modelUpdater :_updaters) {
-				modelUpdater.updateModel(_client.getModelController(), _rootModel);
-			}
-		} catch (final IOException ex) {
-			throw new RuntimeException(ex);
-		}		
-	}
-
+	
 	private void logHeader() {
 		final StringBuffer buf = new StringBuffer();
 		for (final IDmrStatisticFormatter<String> formatter : _formatters) {

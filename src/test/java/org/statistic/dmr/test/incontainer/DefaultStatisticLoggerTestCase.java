@@ -25,11 +25,11 @@ public final class DefaultStatisticLoggerTestCase {
          
     @EJB(mappedName = "java:app/resourceMonitor/DefaultStatisticLogger!org.statistic.dmr.logger.ejb.DefaultStatisticLogger")
     private DefaultEjbStatisticLogger _statisticLogger;
-    
+       
     @Test
     public void testPeriodicLogger() throws Exception {
     	_statisticLogger.startLogging("META-INF/stat.xml");
-    	for (int i = 0; i < 20; i++) {
+    	for (int i = 0; i < 200; i++) {
     		_testBean.testMe();
         	_testSingleton.callMe();
         	_testSingleton.callMe();

@@ -1,4 +1,4 @@
-<dmr-statistic deploymentName="test.war" logCategory="ejb3stat" csvSeparator=";">
+<dmr-statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
    <ejb name="TestBean" abbr="T1" type="StatelessBean">
       <keys length="1">execution-time</keys>
       <methods length="1">testMe</methods>

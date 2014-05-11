@@ -23,6 +23,9 @@ public class DmrStatisticConfiguration implements IDmrModel {
 	@Attribute(name = "logCategory")
 	private String _logCategory;
 	
+	@Attribute(name = "intervall")
+	private long _intervall;
+	
 	@Attribute(name = "csvSeparator")
 	private char _csvSeparator;
 	
@@ -62,6 +65,14 @@ public class DmrStatisticConfiguration implements IDmrModel {
 	@Override
 	public void setCsvSeparator(final char csvSeparator) {
 		_csvSeparator = csvSeparator;
+	}
+	
+	public long getIntervall() {
+		return _intervall;
+	}
+
+	public void setIntervall(final long intervall) {
+		_intervall = intervall;
 	}
 
 	@Override

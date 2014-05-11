@@ -42,6 +42,7 @@ public class TestDeSerializer {
     	
     	configurer.setDeploymentName("test.war");
     	configurer.setCsvSeparator(';');
+    	configurer.setIntervall(5000);
     	configurer.setLogCategory("ejb3stat");
     	configurer.setEjbStatisticModels(details);
     	configurer.setPlatformStatisticModels(platformDetails);
