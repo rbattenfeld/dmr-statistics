@@ -13,7 +13,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.statistic.connectors.IMBeanControllerClient;
-import org.statistic.csvloggers.CsvFormatter;
+import org.statistic.logging.CsvFormatter;
 import org.statistic.models.IRootModel;
 import org.statistic.models.MBeanElement;
 import org.statistic.models.MBeanModel;

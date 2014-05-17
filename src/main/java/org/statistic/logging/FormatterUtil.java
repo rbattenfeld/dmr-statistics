@@ -1,4 +1,4 @@
-package org.statistic.csvloggers;
+package org.statistic.logging;
 
 
 public class FormatterUtil {

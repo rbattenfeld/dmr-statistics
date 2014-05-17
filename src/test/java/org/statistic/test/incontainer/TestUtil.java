@@ -13,7 +13,7 @@ public class TestUtil {
     	final File genericFile = new File("../dmr-statistics/src/test/resources/generic-stat.xml"); 
     	return  ShrinkWrap.create(JavaArchive.class, "resourceMonitor.jar")
 			.addPackages(true, "org.statistic.connectors")
-			.addPackages(true, "org.statistic.csvloggers")
+			.addPackages(true, "org.statistic.logging")
 			.addPackages(true, "org.statistic.models")
 			.addPackages(true, "org.simpleframework.xml")
 			.addPackages(true, "org.statistic.test.incontainer")

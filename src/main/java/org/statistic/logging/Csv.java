@@ -1,4 +1,4 @@
-package org.statistic.csvloggers;
+package org.statistic.logging;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

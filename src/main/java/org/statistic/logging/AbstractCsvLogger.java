@@ -1,4 +1,4 @@
-package org.statistic.csvloggers;
+package org.statistic.logging;
 
 import java.io.IOException;
 import java.util.ArrayList;

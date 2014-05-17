@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.statistic.connectors.IDmrControllerClient;
-import org.statistic.csvloggers.CsvFormatter;
+import org.statistic.logging.CsvFormatter;
 import org.statistic.models.DmrChildElement;
 import org.statistic.models.DmrModel;
 import org.statistic.models.DmrModelUpdater;

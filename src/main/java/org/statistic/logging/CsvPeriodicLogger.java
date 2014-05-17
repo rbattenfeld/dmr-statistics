@@ -1,4 +1,4 @@
-package org.statistic.csvloggers;
+package org.statistic.logging;
 
 import javax.annotation.Resource;
 import javax.ejb.EJBException;

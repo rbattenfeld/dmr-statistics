@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.statistic.connectors.IDmrControllerClient;
 import org.statistic.connectors.IMBeanControllerClient;
-import org.statistic.csvloggers.CsvPeriodicLogger;
+import org.statistic.logging.CsvPeriodicLogger;
 import org.statistic.models.DmrModelUpdater;
 import org.statistic.models.IRootModel;
 import org.statistic.models.MBeanModelUpdater;

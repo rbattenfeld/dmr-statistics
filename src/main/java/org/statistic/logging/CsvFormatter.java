@@ -1,4 +1,4 @@
-package org.statistic.csvloggers;
+package org.statistic.logging;
 
 import org.statistic.models.AbstractElement;
 import org.statistic.models.DmrModel;
