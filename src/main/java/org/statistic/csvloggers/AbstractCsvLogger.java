@@ -1,151 +1,105 @@
 package org.statistic.csvloggers;
 
 import java.io.IOException;
-
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.statistic.connectors.IDmrControllerClient;
 import org.statistic.models.IModelUpdater;
 import org.statistic.models.IRootModel;
 
 /**
- * Abstract class implementing the boilerplate stuff for implementing an own statistical logger.
+ * Abstract class implementing the boilerplate stuff for implementing an own statistic logger.
  */
 public abstract class AbstractCsvLogger {
-	private static final Log _Logger = LogFactory.getLog(AbstractCsvLogger.class);
-//	private final List<IModelUpdater> _updaters = new ArrayList<>();
-//	private final List<ICsvFormatter<String>> _formatters = new ArrayList<ICsvFormatter<String>>();
+	private final List<IModelUpdater> _updaters = new ArrayList<>();
+	private final ICsvFormatter<String> _csvFormatter = new CsvFormatter();
 	private Log _statisticCategoryLogger;
-	private IRootModel _rootModel;
-	private IDmrControllerClient _client; // TODO
-	
-	@Inject
-	private Instance<IModelUpdater> _updaters; // todo producer needed!
-	
-	@Inject @Csv
-	private Instance<ICsvFormatter<String>> _formatters;
-	
-	/**
-	 * Start this statistical logger.
-	 */
-	public void startLogging(final String host, final int port, final String configResourcePath) {
-		initialize(host, port, configResourcePath);
-		startTimer();
-	}
 		
+    //-----------------------------------------------------------------------||
+    //-- Abstract Methods ---------------------------------------------------||
+    //-----------------------------------------------------------------------||
+	
 	/**
-	 * Stops this statistical logger.
+	 *  Returns the model.
 	 */
-	public void stopLogging() {
-		stopTimer();
-		cleanup();
-	}
+	protected abstract IRootModel getRootModel();
 	
     //-----------------------------------------------------------------------||
     //-- Protected Methods --------------------------------------------------||
     //-----------------------------------------------------------------------||
-
-	/**
-	 * Starts the timer.
-	 */
-	protected abstract void startTimer();
 	
-	/**
-	 * Stops the timer.
+	/** 
+	 * Adds a new updater instance to the updater list.
+	 * @param updater
 	 */
-	protected abstract void stopTimer();
+	protected void addUpdaters(final IModelUpdater updater) {
+		_updaters.add(updater);
+	}
 	
 	/**
 	 * Updates the model and then logs a new line.
 	 */
 	protected void logNewLine() {
-		checkState();
 		updateModels();
 		logLine();
 	}
-	
-	protected long getIntervall() {
-		checkState();
-		return _rootModel.getIntervall();
-	}
-	
+		
+	/**
+	 * Updates the model with all registered updaters.
+	 */
 	protected void updateModels() {
-		checkState();
 		try {
 			for (final IModelUpdater modelUpdater :_updaters) {
-				modelUpdater.updateModel(_rootModel);
+				modelUpdater.updateModel(getRootModel());
 			}
 		} catch (final IOException ex) {
 			throw new RuntimeException(ex);
 		}		
 	}
 	
+	/**
+	 * Returns the desired log interval.
+	 * @return
+	 */
+	protected long getInterval() {
+		return getRootModel().getIntervall();
+	}
+	
+	protected void initialize() {
+		_statisticCategoryLogger = LogFactory.getLog(getRootModel().getLogCategory());
+		updateModels();
+		logHeader();
+	}
+	
     //-----------------------------------------------------------------------||
     //-- Private Methods ----------------------------------------------------||
     //-----------------------------------------------------------------------||
-	
-	private void checkState() {
-		if (_client == null) {
-			throw new UnsupportedOperationException("Not started");
-		}
-	}
-	
-	private void initialize(final String host, final int port, final String configResourcePath) {
-		try {
-			_rootModel = IRootModel.Factory.createFromResource(configResourcePath);
-			_statisticCategoryLogger = LogFactory.getLog(_rootModel.getLogCategory());
-			_client = IDmrControllerClient.Factory.create(host, port);
-//			if (_rootModel.getDmrModels() != null && !_rootModel.getDmrModels().isEmpty()) {
-//				_updaters.add(new DmrModelUpdater());
-//				_formatters.add(new CsvFormatter());
-//			}	
-			updateModels();
-			logHeader();
-		} catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-	
-	private void cleanup() {
-		try {
-			if (_client != null) {
-				_client.close();
-			}
-		} catch (final IOException ex) {
-			// ignoring
-		}
-	}
-	
+		
 	private void logHeader() {
 		final StringBuffer buf = new StringBuffer();
-		for (final ICsvFormatter<String> formatter : _formatters) {
-			if (buf.length() > 0) {
-				buf.append(_rootModel.getCsvSeparator());
-			}
-			buf.append(formatter.formatHeader(_rootModel));
-		}	
+		if (buf.length() > 0) {
+			buf.append(getRootModel().getCsvSeparator());
+		}
+		buf.append(_csvFormatter.formatHeader(getRootModel()));
 		logStatistics(buf.toString());	
 	}
 	
 	private void logLine() {
 		final StringBuffer buf = new StringBuffer();
-		for (final ICsvFormatter<String> formatter : _formatters) {
-			if (buf.length() > 0) {
-				buf.append(_rootModel.getCsvSeparator());
-			}
-			buf.append(formatter.formatLine(_rootModel));
-		}	
+		if (buf.length() > 0) {
+			buf.append(getRootModel().getCsvSeparator());
+		}
+		buf.append(_csvFormatter.formatLine(getRootModel()));
 		logStatistics(buf.toString());	
 	}
-	
+		
 	private void logStatistics(final String line) {
 		if ( _statisticCategoryLogger != null) {
 			_statisticCategoryLogger.info(line);
 		} else {
-			_Logger.error("This instance is not started!");
+			throw new UnsupportedOperationException("This logger is not initialized!");
 		}
 	}
 }
