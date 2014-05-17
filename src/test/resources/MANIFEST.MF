@@ -3,5 +3,5 @@ Archiver-Version: Plexus Archiver
 Created-By: Apache Maven
 Built-By: tkba2
 Build-Jdk: 1.7.0_15
-Dependencies: org.jboss.as.controller-client,org.jboss.dmr
+Dependencies: org.jboss.as.controller,org.jboss.as.controller-client,org.jboss.dmr
 
