@@ -1,0 +1,5 @@
+{
+    "outcome" : "failed",
+    "failure-description" : "JBAS014883: No resource definition is registered for address [(\"core-service\" : \"platform-mbeans\")]",
+    "rolled-back" : true
+}

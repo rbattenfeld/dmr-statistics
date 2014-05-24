@@ -1,5 +1,6 @@
 package org.statistic.models;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -34,6 +35,21 @@ public interface IRootModel {
 	public void setMBeanModels(final List<MBeanModel> mbeanModels);
 	
     class Factory {
+		
+    	/**
+		 * Returns a <code>IRootModel</code> instance read from the given full path to the file.
+		 * @param resourceName
+		 * @return
+		 * @throws IOException
+		 */
+		public static IRootModel createFromFile(final String fullPathToFile) throws IOException {
+			final Serializer serializer = new Persister();
+			try {
+				return serializer.read(RootModel.class, new File(fullPathToFile));
+			} catch (final Exception ex) {
+				throw new IOException(ex);
+			}
+		}
 		
 		/**
 		 * Returns a <code>IRootModel</code> instance read from the given resource file.

@@ -1,0 +1,502 @@
+{
+    "outcome" : "success",
+    "result" : {"type" : {
+        "operating-system" : {
+            "name" : "Linux",
+            "arch" : "amd64",
+            "version" : "3.13.9-200.fc20.x86_64",
+            "available-processors" : 8,
+            "system-load-average" : 0.01,
+            "object-name" : "java.lang:type=OperatingSystem"
+        },
+        "memory-manager" : {"name" : {
+            "PS_MarkSweep" : {
+                "memory-pool-names" : [
+                    "PS_Eden_Space",
+                    "PS_Survivor_Space",
+                    "PS_Old_Gen",
+                    "PS_Perm_Gen"
+                ],
+                "name" : "PS_MarkSweep",
+                "object-name" : "java.lang:type=MemoryManager,name=\"PS MarkSweep\"",
+                "valid" : true
+            },
+            "PS_Scavenge" : {
+                "memory-pool-names" : [
+                    "PS_Eden_Space",
+                    "PS_Survivor_Space"
+                ],
+                "name" : "PS_Scavenge",
+                "object-name" : "java.lang:type=MemoryManager,name=\"PS Scavenge\"",
+                "valid" : true
+            },
+            "CodeCacheManager" : {
+                "memory-pool-names" : ["Code_Cache"],
+                "name" : "CodeCacheManager",
+                "object-name" : "java.lang:type=MemoryManager,name=CodeCacheManager",
+                "valid" : true
+            }
+        }},
+        "threading" : {
+            "all-thread-ids" : [
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416,
+                357564416
+            ],
+            "thread-contention-monitoring-supported" : true,
+            "thread-cpu-time-supported" : true,
+            "current-thread-cpu-time-supported" : true,
+            "object-monitor-usage-supported" : true,
+            "synchronizer-usage-supported" : true,
+            "thread-contention-monitoring-enabled" : false,
+            "thread-cpu-time-enabled" : true,
+            "thread-count" : 71,
+            "peak-thread-count" : 127,
+            "total-started-thread-count" : 357564416,
+            "daemon-thread-count" : 11,
+            "current-thread-cpu-time" : 357564416,
+            "current-thread-user-time" : 357564416,
+            "object-name" : "java.lang:type=Threading"
+        },
+        "runtime" : {
+            "name" : "29540@localhost",
+            "vm-name" : "OpenJDK 64-Bit Server VM",
+            "vm-vendor" : "Oracle Corporation",
+            "vm-version" : "24.51-b03",
+            "spec-name" : "Java Virtual Machine Specification",
+            "spec-vendor" : "Oracle Corporation",
+            "spec-version" : "1.7",
+            "management-spec-version" : "1.2",
+            "class-path" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/jboss-modules.jar",
+            "library-path" : "/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib",
+            "boot-class-path-supported" : true,
+            "boot-class-path" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/netx.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/plugin.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/classes",
+            "input-arguments" : [
+                "-agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:46843",
+                "-Dprogram.name=JBossTools: WildFly 8.0 Runtime Server",
+                "-Xms64m",
+                "-Xmx512m",
+                "-XX:MaxPermSize=256m",
+                "-Dorg.jboss.resolver.warning=true",
+                "-Djava.net.preferIPv4Stack=true",
+                "-Dsun.rmi.dgc.client.gcInterval=3600000",
+                "-Dsun.rmi.dgc.server.gcInterval=3600000",
+                "-Djboss.modules.system.pkgs=org.jboss.byteman",
+                "-Djava.awt.headless=true",
+                "-Dorg.jboss.boot.log.file=/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/log/boot.log",
+                "-Dlogging.configuration=file:/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/configuration/logging.properties",
+                "-Djboss.home.dir=/home/bfr/DevTools/wildfly-8.1.0.CR1",
+                "-Dorg.jboss.logmanager.nocolor=true",
+                "-Dfile.encoding=UTF-8"
+            ],
+            "start-time" : 357564416,
+            "system-properties" : {
+                "awt.toolkit" : "sun.awt.X11.XToolkit",
+                "file.encoding" : "UTF-8",
+                "file.encoding.pkg" : "sun.io",
+                "file.separator" : "/",
+                "java.awt.graphicsenv" : "sun.awt.X11GraphicsEnvironment",
+                "java.awt.headless" : "true",
+                "java.awt.printerjob" : "sun.print.PSPrinterJob",
+                "java.class.path" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/jboss-modules.jar",
+                "java.class.version" : "51.0",
+                "java.endorsed.dirs" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/endorsed",
+                "java.ext.dirs" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/ext:/usr/java/packages/lib/ext",
+                "java.home" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre",
+                "java.io.tmpdir" : "/tmp",
+                "java.library.path" : "/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib",
+                "java.naming.factory.url.pkgs" : "org.jboss.as.naming.interfaces:org.jboss.ejb.client.naming",
+                "java.net.preferIPv4Stack" : "true",
+                "java.protocol.handler.pkgs" : "org.jboss.net.protocol|org.jboss.vfs.protocol",
+                "java.runtime.name" : "OpenJDK Runtime Environment",
+                "java.runtime.version" : "1.7.0_51-mockbuild_2014_01_31_16_21-b00",
+                "java.specification.name" : "Java Platform API Specification",
+                "java.specification.vendor" : "Oracle Corporation",
+                "java.specification.version" : "1.7",
+                "java.util.logging.manager" : "org.jboss.logmanager.LogManager",
+                "java.vendor" : "Oracle Corporation",
+                "java.vendor.url" : "http://java.oracle.com/",
+                "java.vendor.url.bug" : "http://bugreport.sun.com/bugreport/",
+                "java.version" : "1.7.0_51",
+                "java.vm.info" : "mixed mode",
+                "java.vm.name" : "OpenJDK 64-Bit Server VM",
+                "java.vm.specification.name" : "Java Virtual Machine Specification",
+                "java.vm.specification.vendor" : "Oracle Corporation",
+                "java.vm.specification.version" : "1.7",
+                "java.vm.vendor" : "Oracle Corporation",
+                "java.vm.version" : "24.51-b03",
+                "javax.management.builder.initial" : "org.jboss.as.jmx.PluggableMBeanServerBuilder",
+                "javax.xml.datatype.DatatypeFactory" : "__redirected.__DatatypeFactory",
+                "javax.xml.parsers.DocumentBuilderFactory" : "__redirected.__DocumentBuilderFactory",
+                "javax.xml.parsers.SAXParserFactory" : "__redirected.__SAXParserFactory",
+                "javax.xml.stream.XMLEventFactory" : "__redirected.__XMLEventFactory",
+                "javax.xml.stream.XMLInputFactory" : "__redirected.__XMLInputFactory",
+                "javax.xml.stream.XMLOutputFactory" : "__redirected.__XMLOutputFactory",
+                "javax.xml.transform.TransformerFactory" : "__redirected.__TransformerFactory",
+                "javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema" : "__redirected.__SchemaFactory",
+                "javax.xml.xpath.XPathFactory:http://java.sun.com/jaxp/xpath/dom" : "__redirected.__XPathFactory",
+                "jboss.bind.address" : "localhost",
+                "jboss.home.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1",
+                "jboss.host.name" : "blues-pc",
+                "jboss.modules.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/modules",
+                "jboss.modules.system.pkgs" : "org.jboss.byteman",
+                "jboss.node.name" : "blues-pc",
+                "jboss.qualified.host.name" : "blues-pc",
+                "jboss.server.base.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone",
+                "jboss.server.config.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/configuration",
+                "jboss.server.data.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/data",
+                "jboss.server.deploy.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/data/content",
+                "jboss.server.log.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/log",
+                "jboss.server.name" : "blues-pc",
+                "jboss.server.persist.config" : "true",
+                "jboss.server.temp.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/tmp",
+                "line.separator" : "
+",
+                "logging.configuration" : "file:/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/configuration/logging.properties",
+                "module.path" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/modules",
+                "org.apache.xml.security.ignoreLineBreaks" : "true",
+                "org.jboss.boot.log.file" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/standalone/log/boot.log",
+                "org.jboss.logmanager.nocolor" : "true",
+                "org.jboss.resolver.warning" : "true",
+                "org.jboss.security.context.ThreadLocal" : "true",
+                "org.xml.sax.driver" : "__redirected.__XMLReaderFactory",
+                "os.arch" : "amd64",
+                "os.name" : "Linux",
+                "os.version" : "3.13.9-200.fc20.x86_64",
+                "path.separator" : ":",
+                "program.name" : "JBossTools: WildFly 8.0 Runtime Server",
+                "sun.arch.data.model" : "64",
+                "sun.boot.class.path" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/netx.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/plugin.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/classes",
+                "sun.boot.library.path" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.60-2.4.5.1.fc20.x86_64/jre/lib/amd64",
+                "sun.cpu.endian" : "little",
+                "sun.cpu.isalist" : "",
+                "sun.desktop" : "gnome",
+                "sun.io.unicode.encoding" : "UnicodeLittle",
+                "sun.java.command" : "org.jboss.modules.Main -mp /home/bfr/DevTools/wildfly-8.1.0.CR1/modules -jaxpmodule javax.xml.jaxp-provider org.jboss.as.standalone -b localhost --server-config=standalone.xml",
+                "sun.java.launcher" : "SUN_STANDARD",
+                "sun.jnu.encoding" : "UTF-8",
+                "sun.management.compiler" : "HotSpot 64-Bit Tiered Compilers",
+                "sun.nio.ch.bugLevel" : "",
+                "sun.os.patch.level" : "unknown",
+                "sun.rmi.dgc.client.gcInterval" : "3600000",
+                "sun.rmi.dgc.server.gcInterval" : "3600000",
+                "user.country" : "US",
+                "user.dir" : "/home/bfr/DevTools/wildfly-8.1.0.CR1/bin",
+                "user.home" : "/home/bfr",
+                "user.language" : "en",
+                "user.name" : "bfr",
+                "user.timezone" : "Europe/Zurich"
+            },
+            "uptime" : 357564416,
+            "object-name" : "java.lang:type=Runtime"
+        },
+        "memory-pool" : {"name" : {
+            "PS_Eden_Space" : {
+                "name" : "PS_Eden_Space",
+                "type" : "HEAP",
+                "valid" : true,
+                "memory-manager-names" : [
+                    "PS_MarkSweep",
+                    "PS_Scavenge"
+                ],
+                "usage-threshold-supported" : false,
+                "collection-usage-threshold-supported" : true,
+                "usage-threshold" : "undefined",
+                "collection-usage-threshold" : 357564416,
+                "usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "peak-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "usage-threshold-exceeded" : "undefined",
+                "usage-threshold-count" : "undefined",
+                "collection-usage-threshold-exceeded" : false,
+                "collection-usage-threshold-count" : 357564416,
+                "collection-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "object-name" : "java.lang:type=MemoryPool,name=\"PS Eden Space\""
+            },
+            "Code_Cache" : {
+                "name" : "Code_Cache",
+                "type" : "NON_HEAP",
+                "valid" : true,
+                "memory-manager-names" : ["CodeCacheManager"],
+                "usage-threshold-supported" : true,
+                "collection-usage-threshold-supported" : false,
+                "usage-threshold" : 357564416,
+                "collection-usage-threshold" : "undefined",
+                "usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "peak-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "usage-threshold-exceeded" : false,
+                "usage-threshold-count" : 357564416,
+                "collection-usage-threshold-exceeded" : "undefined",
+                "collection-usage-threshold-count" : "undefined",
+                "collection-usage" : "undefined",
+                "object-name" : "java.lang:type=MemoryPool,name=\"Code Cache\""
+            },
+            "PS_Old_Gen" : {
+                "name" : "PS_Old_Gen",
+                "type" : "HEAP",
+                "valid" : true,
+                "memory-manager-names" : ["PS_MarkSweep"],
+                "usage-threshold-supported" : true,
+                "collection-usage-threshold-supported" : true,
+                "usage-threshold" : 357564416,
+                "collection-usage-threshold" : 357564416,
+                "usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "peak-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "usage-threshold-exceeded" : false,
+                "usage-threshold-count" : 357564416,
+                "collection-usage-threshold-exceeded" : false,
+                "collection-usage-threshold-count" : 357564416,
+                "collection-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "object-name" : "java.lang:type=MemoryPool,name=\"PS Old Gen\""
+            },
+            "PS_Survivor_Space" : {
+                "name" : "PS_Survivor_Space",
+                "type" : "HEAP",
+                "valid" : true,
+                "memory-manager-names" : [
+                    "PS_MarkSweep",
+                    "PS_Scavenge"
+                ],
+                "usage-threshold-supported" : false,
+                "collection-usage-threshold-supported" : true,
+                "usage-threshold" : "undefined",
+                "collection-usage-threshold" : 357564416,
+                "usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "peak-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "usage-threshold-exceeded" : "undefined",
+                "usage-threshold-count" : "undefined",
+                "collection-usage-threshold-exceeded" : false,
+                "collection-usage-threshold-count" : 357564416,
+                "collection-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "object-name" : "java.lang:type=MemoryPool,name=\"PS Survivor Space\""
+            },
+            "PS_Perm_Gen" : {
+                "name" : "PS_Perm_Gen",
+                "type" : "NON_HEAP",
+                "valid" : true,
+                "memory-manager-names" : ["PS_MarkSweep"],
+                "usage-threshold-supported" : true,
+                "collection-usage-threshold-supported" : true,
+                "usage-threshold" : 357564416,
+                "collection-usage-threshold" : 357564416,
+                "usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "peak-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "usage-threshold-exceeded" : false,
+                "usage-threshold-count" : 357564416,
+                "collection-usage-threshold-exceeded" : false,
+                "collection-usage-threshold-count" : 357564416,
+                "collection-usage" : {
+                    "init" : 357564416,
+                    "used" : 357564416,
+                    "committed" : 357564416,
+                    "max" : 357564416
+                },
+                "object-name" : "java.lang:type=MemoryPool,name=\"PS Perm Gen\""
+            }
+        }},
+        "class-loading" : {
+            "loaded-class-count" : 9575,
+            "object-name" : "java.lang:type=ClassLoading",
+            "total-loaded-class-count" : 357564416,
+            "unloaded-class-count" : 357564416,
+            "verbose" : false
+        },
+        "compilation" : {
+            "name" : "HotSpot 64-Bit Tiered Compilers",
+            "compilation-time-monitoring-supported" : true,
+            "total-compilation-time" : 357564416,
+            "object-name" : "java.lang:type=Compilation"
+        },
+        "buffer-pool" : {"name" : {
+            "direct" : {
+                "count" : 357564416,
+                "memory-used" : 357564416,
+                "name" : "direct",
+                "object-name" : "java.nio:type=BufferPool,name=direct",
+                "total-capacity" : 357564416
+            },
+            "mapped" : {
+                "count" : 357564416,
+                "memory-used" : 357564416,
+                "name" : "mapped",
+                "object-name" : "java.nio:type=BufferPool,name=mapped",
+                "total-capacity" : 357564416
+            }
+        }},
+        "memory" : {
+            "heap-memory-usage" : {
+                "init" : 300000,
+                "used" : 300001,
+                "committed" : 300002,
+                "max" : 300003
+            },
+            "non-heap-memory-usage" : {
+                "init" : 300004,
+                "used" : 300005,
+                "committed" : 300006,
+                "max" : 300007
+            },
+            "object-name" : "java.lang:type=Memory",
+            "object-pending-finalization-count" : 0,
+            "verbose" : false
+        },
+        "garbage-collector" : {"name" : {
+            "PS_MarkSweep" : {
+                "collection-count" : 357564416,
+                "collection-time" : 357564416,
+                "memory-pool-names" : [
+                    "PS_Eden_Space",
+                    "PS_Survivor_Space",
+                    "PS_Old_Gen",
+                    "PS_Perm_Gen"
+                ],
+                "name" : "PS_MarkSweep",
+                "object-name" : "java.lang:type=GarbageCollector,name=\"PS MarkSweep\"",
+                "valid" : true
+            },
+            "PS_Scavenge" : {
+                "collection-count" : 357564416,
+                "collection-time" : 357564416,
+                "memory-pool-names" : [
+                    "PS_Eden_Space",
+                    "PS_Survivor_Space"
+                ],
+                "name" : "PS_Scavenge",
+                "object-name" : "java.lang:type=GarbageCollector,name=\"PS Scavenge\"",
+                "valid" : true
+            }
+        }}
+    }}
+}

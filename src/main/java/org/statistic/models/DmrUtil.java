@@ -1,6 +1,5 @@
 package org.statistic.models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,25 +28,33 @@ public class DmrUtil {
         return operation;
     }
 	
-	public static PathAddress createPathAddress(final String pathAddress, final String[] replacements) throws IOException {
+	public static PathAddress createPathAddress(final String pathAddress) {
+		if (pathAddress == null || pathAddress.isEmpty() || pathAddress.length() < 3) {
+			throw new IllegalArgumentException("Illegal pathAddress: cannot be null or empty, and must have a length >= 3");
+		}
 		final List<PathElement> addressList = new ArrayList<PathElement>();
-		final String[] items = pathAddress.split("/", -1);
-		int replacementCounter = 0;
-		for (String addressKeyValue : items) {
+		final String[] items = getStrippedPathAddress(pathAddress).split("/", -1);
+		for (final String addressKeyValue : items) {
 			final String[] adressItems = addressKeyValue.split("=", -1);
-			if (adressItems.length == 2) {
-				if (adressItems[1].equals("?")) {
-					if (replacements != null && replacementCounter < replacements.length) {
-						addressList.add(PathElement.pathElement(adressItems[0], replacements[replacementCounter++]));
-					} else {
-						throw new IllegalArgumentException("Invalid number of arguments");
-					}
-				} else {
-					addressList.add(PathElement.pathElement(adressItems[0], adressItems[1].replaceAll("###", "/")));
-				}
+			if (adressItems.length == 2 && !adressItems[0].isEmpty() && !adressItems[1].isEmpty()) {
+				addressList.add(PathElement.pathElement(adressItems[0], adressItems[1]));
+			} else {
+				throw new IllegalArgumentException("Illegal key value pair: " + addressKeyValue);
 			}
 		}
 		return PathAddress.pathAddress(addressList);
 	}
-				
+	
+	//-----------------------------------------------------------------------||
+	//-- Private Methods ----------------------------------------------------||
+	//-----------------------------------------------------------------------||
+	
+	private static String getStrippedPathAddress(final String pathAddress) {
+		if (pathAddress.startsWith("/")) {
+			return pathAddress.substring(1);
+		} else {
+			return pathAddress;
+		}
+	}
+
 }

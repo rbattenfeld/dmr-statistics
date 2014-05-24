@@ -1,0 +1,31 @@
+<statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
+      
+   <dmr name="platform" path-address="core-service=platform-mbean">
+      <child-element abbreviation="heap">
+         <childs>type, memory, heap-memory-usage</childs>
+         <keys>init, initXX, used, usedXX, committed, committedXX, max, maxXX</keys>
+      </child-element>
+      
+     <child-element abbreviation="non-heap">
+         <childs>type, memory, non-heap-memory-usage</childs>
+         <keys>init, used, committed, max</keys>
+      </child-element>
+      
+     <child-element abbreviation="os">
+         <childs>type, operating-system</childs>
+         <keys>available-processors, system-load-average</keys>
+      </child-element>   
+      
+     <child-element abbreviation="invalidChilds-1">
+         <childs>type, operating--system</childs>
+         <keys>available-processors, system-load-average</keys>
+      </child-element> 
+      
+      <child-element abbreviation="invalidChilds-2">
+         <childs>typexxxx, operating-system</childs>
+         <keys>available-processors, system-load-average</keys>
+      </child-element> 
+        
+   </dmr>
+      
+</statistic>

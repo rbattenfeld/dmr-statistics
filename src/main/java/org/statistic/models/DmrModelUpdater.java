@@ -3,13 +3,17 @@ package org.statistic.models;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.OperationBuilder;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
+import org.statistic.util.ModeNodelUtil;
 
 public class DmrModelUpdater implements IModelUpdater {
+	private static final Log _Logger = LogFactory.getLog(DmrModelUpdater.class);
 	private final ModelControllerClient _client; 
 	
 	public DmrModelUpdater(final ModelControllerClient client) {
@@ -23,11 +27,14 @@ public class DmrModelUpdater implements IModelUpdater {
 	
 	public void updateModel(final List<DmrModel> models) throws IOException {
 		for (final DmrModel model : models) {
-			final PathAddress address = DmrUtil.createPathAddress(model.getPathAddress(), new String[] {});
+			final PathAddress address = DmrUtil.createPathAddress(model.getPathAddress());
 			final ModelNode operation = DmrUtil.createOperation(address);
 			final ModelNode response = _client.execute(new OperationBuilder(operation).build());
 			if (response.get(ClientConstants.OUTCOME).asString().equals(ClientConstants.SUCCESS)) {
 				extractValues(model, response.get(ClientConstants.RESULT));
+			} else {
+				_Logger.debug(ModeNodelUtil.getFailureDescription(response));
+				extractValues(model, new ModelNode());
 			}
 		}
 	}
@@ -54,13 +61,5 @@ public class DmrModelUpdater implements IModelUpdater {
 				}
 			}
 		}
-		
-//		for (final MBeanElement mbeanElement : model.getMBeanElements()) {
-//			ModelNode childNode = response;
-//			for (final String child : mbeanElement.getMBeanElement().getChilds()) {
-//				childNode = childNode.get(child);
-//			}
-//			DmrUtil.updateStatistics(childNode, pathElement.getKeys(), pathElement.getStatisticMap());
-//		}
 	}
 }

@@ -1,0 +1,17 @@
+<statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
+       
+   <dmr name="platformInvalidPath" path-address="core-service=platform-mbeanXX">
+           
+     <child-element abbreviation="non-heap">
+         <childs>type, memory, non-heap-memory-usage</childs>
+         <keys>init, used, committed, max</keys>
+      </child-element>
+      
+     <child-element abbreviation="os">
+         <childs>type, operating-system</childs>
+         <keys>available-processors, system-load-average</keys>
+      </child-element>   
+              
+   </dmr>
+   
+</statistic>
