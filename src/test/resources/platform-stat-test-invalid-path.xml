@@ -1,6 +1,6 @@
 <statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
        
-   <dmr name="platformInvalidPath" path-address="core-service=platform-mbeanXX">
+   <model name="platformInvalidPath" path-address="core-service=platform-mbeanXX" class="org.jrbsoft.statistic.protocol.dmr.model.DmrModel">
            
      <child-element abbreviation="non-heap">
          <childs>type, memory, non-heap-memory-usage</childs>
@@ -12,6 +12,6 @@
          <keys>available-processors, system-load-average</keys>
       </child-element>   
               
-   </dmr>
+   </model>
    
 </statistic>

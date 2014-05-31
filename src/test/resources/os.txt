@@ -1,0 +1,11 @@
+{
+    "outcome" : "success",
+    "result" : {
+        "name" : "Linux",
+        "arch" : "amd64",
+        "version" : "3.13.9-200.fc20.x86_64",
+        "available-processors" : 8,
+        "system-load-average" : 0.02,
+        "object-name" : "java.lang:type=OperatingSystem"
+    }
+}

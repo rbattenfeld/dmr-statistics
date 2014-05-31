@@ -1,0 +1,22 @@
+{
+    "outcome" : "success",
+    "result" : {
+        "launch-type" : "STANDALONE",
+        "management-major-version" : 2,
+        "management-micro-version" : 1,
+        "management-minor-version" : 0,
+        "name" : "blues-pc",
+        "namespaces" : [],
+        "process-type" : "Server",
+        "product-name" : "undefined",
+        "product-version" : "undefined",
+        "profile-name" : "undefined",
+        "release-codename" : "Kenny",
+        "release-version" : "8.1.0.CR1",
+        "running-mode" : "NORMAL",
+        "schema-locations" : [],
+        "server-state" : "reload-required",
+        "core-service" : {},
+    },     
+    "response-headers" : {"process-state" : "reload-required"}
+}
