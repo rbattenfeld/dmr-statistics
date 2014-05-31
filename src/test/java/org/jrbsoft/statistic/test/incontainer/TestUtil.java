@@ -15,6 +15,8 @@ public class TestUtil {
 			.addPackages(true, "org.xmlpull")
 			.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
     	    .addAsManifestResource("MANIFEST.MF", "MANIFEST.MF")
+    	    .addAsManifestResource("mbean-stat.xml", "mbean-stat.xml")
+    	    .addAsManifestResource("mbean-notification-stat.xml", "mbean-notification-stat.xml")
     	    .addAsManifestResource("generic-stat.xml", "generic-stat.xml");
     }
 }

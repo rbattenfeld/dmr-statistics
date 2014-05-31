@@ -1,0 +1,11 @@
+<statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
+   
+   <model name="exampleDS" object-name="jboss.as:subsystem=datasources,data-source=ExampleDS,statistics=pool" class="org.jrbsoft.statistic.protocol.jmx.model.MBeanModel">
+      
+      <mbean-element abbreviation="pool">
+         <keys>ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime</keys>
+      </mbean-element>
+      
+   </model>
+   
+</statistic>

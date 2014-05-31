@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.ObjectName;
+
 import org.jrbsoft.statistic.model.AbstractElement;
 import org.jrbsoft.statistic.model.IProtocolModel;
 import org.simpleframework.xml.Attribute;
@@ -25,6 +27,8 @@ public class MBeanModel implements IProtocolModel, Serializable {
     @ElementList(entry = "mbean-element", inline = true, required = false)
     private List<MBeanElement> _mbeanElements = new ArrayList<MBeanElement>();
 
+    private ObjectName _mbeanObjectName = null;
+    
     public String getName() {
         return _name;
     }
@@ -49,6 +53,20 @@ public class MBeanModel implements IProtocolModel, Serializable {
         _mbeanElements = mbeanElements;
     }
 
+    public ObjectName getMBeanObjectName() {
+        return _mbeanObjectName;
+    }
+
+    public void setMBeanObjectName(final ObjectName objectName) {
+    	_mbeanObjectName = objectName;
+    }
+    
+    public void updateNotification(final String key, final Object value) {
+    	for (final MBeanElement element : getMBeanElements()) {
+    		element.updateNotification(key, value);
+    	}
+    }
+    
     @Override
     public List<AbstractElement> getStatisticElements() {
     	final List<AbstractElement> elements = new ArrayList<AbstractElement>();
