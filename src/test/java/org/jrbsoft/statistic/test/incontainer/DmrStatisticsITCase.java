@@ -29,10 +29,10 @@ public final class DmrStatisticsITCase {
     	return TestUtil.getDeployment();
     }
 
-    @EJB(mappedName = "java:app/resourceMonitor/TestBean!com.swx.ptp.kernel.statistic.test.incontainer.dmr.TestBean")
+    @EJB(mappedName = "java:app/resourceMonitor/TestBean!org.jrbsoft.statistic.test.incontainer.TestBean")
     private TestBean _testBean;
         
-    @EJB(mappedName = "java:app/resourceMonitor/TestSingleton!com.swx.ptp.kernel.statistic.test.incontainer.dmr.TestSingleton")
+    @EJB(mappedName = "java:app/resourceMonitor/TestSingleton!org.jrbsoft.statistic.test.incontainer.TestSingleton")
     private TestSingleton _testSingleton;   
     
     @Test

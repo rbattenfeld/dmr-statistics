@@ -78,9 +78,7 @@ public class MBeanModel implements IProtocolModel, Serializable {
         final StringBuffer buf = new StringBuffer();
         buf.append(String.format("%-25s : %s\n", "Statistic for", _name));
         for (final MBeanElement element : _mbeanElements) {
-               for (final Map.Entry<String, Object> entry : element.getStatisticMap().entrySet()) {
-                   buf.append(String.format("%-25s : %s\n", element.getAbbreviation() + "-" + entry.getKey(), entry.getValue()));
-               }
+        	buf.append(element);
         }
         return buf.toString();
     }

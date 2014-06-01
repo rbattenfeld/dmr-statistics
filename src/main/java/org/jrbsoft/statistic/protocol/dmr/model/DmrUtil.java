@@ -2,19 +2,19 @@ package org.jrbsoft.statistic.protocol.dmr.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
+import org.jrbsoft.statistic.model.AbstractElement;
 
 public class DmrUtil {
 
-    public static void updateStatistics(final ModelNode poolNode, final String[] keys, final Map<String, Object> valuesMap) {
+    public static void updateStatistics(final ModelNode poolNode, final String[] keys, final AbstractElement element) {
         if (keys != null) {
             for (final String key : keys) {
-                valuesMap.put(key, poolNode.get(key));
+            	element.addStatistics(key, poolNode.get(key));
             }
         }
     }

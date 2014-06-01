@@ -3,7 +3,6 @@ package org.jrbsoft.statistic.protocol.jmx.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.management.Attribute;
 import javax.management.AttributeChangeNotification;
@@ -22,6 +21,7 @@ import javax.management.ReflectionException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jrbsoft.statistic.model.AbstractElement;
 import org.jrbsoft.statistic.model.IModelUpdater;
 import org.jrbsoft.statistic.model.IProtocolModel;
 import org.jrbsoft.statistic.model.IRootModel;
@@ -70,7 +70,7 @@ public class MBeanModelUpdater implements IModelUpdater {
 	            final ObjectName mbean = getObjectName(model);
 	            if (_mbeanServer.isRegistered(mbean)) {
 	                for (final MBeanElement element : model.getMBeanElements()) {
-	                    updateStatistics(mbean, element.getKeys(), element.getStatisticMap());
+	                    updateStatistics(mbean, element.getKeys(), element);
 	                }
 	                if (mbean instanceof NotificationBroadcaster) {
 	                	_models.add(model);
@@ -85,11 +85,11 @@ public class MBeanModelUpdater implements IModelUpdater {
         }
     }
 
-    private void updateStatistics(final ObjectName mbean, final String[] keys, final Map<String, Object> valuesMap) throws AttributeNotFoundException, InstanceNotFoundException, MBeanException, ReflectionException {
+    private void updateStatistics(final ObjectName mbean, final String[] keys, final AbstractElement element) throws AttributeNotFoundException, InstanceNotFoundException, MBeanException, ReflectionException {
         if (keys != null) {
         	final AttributeList values = _mbeanServer.getAttributes(mbean, keys);
         	for (Attribute attr : values.asList()) {
-        		valuesMap.put(attr.getName(), attr.getValue());
+        		element.addStatistics(attr.getName(), attr.getValue());
         	}
         }
     }

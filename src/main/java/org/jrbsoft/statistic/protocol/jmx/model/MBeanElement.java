@@ -6,8 +6,8 @@ import org.jrbsoft.statistic.model.AbstractElement;
 public class MBeanElement extends AbstractElement {
 
     public void updateNotification(final String key, final Object value) {
-    	if (getStatisticMap().containsKey(key)) {
-    		getStatisticMap().put(key, value);
+    	if (containsStatistics(key)) {
+    		addStatistics(key, value);
     	}
     }
 }

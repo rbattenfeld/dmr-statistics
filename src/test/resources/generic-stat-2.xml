@@ -1,0 +1,20 @@
+<statistic deploymentName="test.war" logCategory="serverStatistic2" intervall="5000" csvSeparator=";">
+   
+   <dmr name="platform" path-address="core-service=platform-mbean">
+      <child-element abbreviation="heap">
+         <childs>type, memory, heap-memory-usage</childs>
+         <keys>init, used, committed, max</keys>
+      </child-element>
+      
+     <child-element abbreviation="non-heap">
+         <childs>type, memory, non-heap-memory-usage</childs>
+         <keys>init, used, committed, max</keys>
+      </child-element>
+      
+     <child-element abbreviation="os">
+         <childs>type, operating-system</childs>
+         <keys>available-processors, system-load-average</keys>
+      </child-element>   
+   </dmr>
+   
+</statistic>

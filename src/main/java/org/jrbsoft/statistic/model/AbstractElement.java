@@ -17,7 +17,7 @@ public abstract class AbstractElement {
     @Element(name = "keys")
     private String[] _keys;
 
-    private Map<String, Object> _statisticMap = new HashMap<>();
+    private Map<String, AbstractMinMaxType<?>> _statisticMap = new HashMap<>();
 
     public String getName() {
         return _name;
@@ -43,24 +43,62 @@ public abstract class AbstractElement {
         _keys = keys;
     }
 
-    public void addStatistics(final String key, final Object value) {
-        _statisticMap.put(key, value);
+    public void addStatistics(final String key, final Object value) {    	
+    	final AbstractMinMaxType<?> type = (AbstractMinMaxType<?>)_statisticMap.get(key);
+    	if (type != null) {
+    		type.set(AbstractMinMaxType.asMinMaxType(value).getCurrent());
+    	} else {
+    		_statisticMap.put(key, AbstractMinMaxType.asMinMaxType(value));
+    	}
     }
 
-    public Map<String, Object> getStatisticMap() {
-        return _statisticMap;
+    public boolean containsStatistics(final String key) {
+    	return _statisticMap.containsKey(key);
+    }
+    
+    public Object getCurrentValue(final String key) {
+    	final AbstractMinMaxType<?> type = (AbstractMinMaxType<?>)_statisticMap.get(key);
+    	if (type != null) {
+    		return type.getCurrent();
+    	} else {
+    		return null; 
+    	}
+    }
+    
+    public Object getMinValue(final String key) {
+    	final AbstractMinMaxType<?> type = (AbstractMinMaxType<?>)_statisticMap.get(key);
+    	if (type != null) {
+    		return type.getMin();
+    	} else {
+    		return null; 
+    	}
     }
 
-    public void setStatisticMap(final Map<String, Object> statisticMap) {
-        _statisticMap = statisticMap;
+    public Object getMaxValue(final String key) {
+    	final AbstractMinMaxType<?> type = (AbstractMinMaxType<?>)_statisticMap.get(key);
+    	if (type != null) {
+    		return type.getMax();
+    	} else {
+    		return null; 
+    	}
     }
 
+    public Object getAvgValue(final String key) {
+    	final AbstractMinMaxType<?> type = (AbstractMinMaxType<?>)_statisticMap.get(key);
+    	if (type != null) {
+    		return type.getAvg();
+    	} else {
+    		return null; 
+    	}
+    }
+    
     public String toString() {
         final StringBuffer buf = new StringBuffer();
            buf.append(String.format("%-25s : %s\n", "Statistic for:", _abbreviation));
-           for (final Map.Entry<String, Object> entry : _statisticMap.entrySet()) {
+           for (final Map.Entry<String, AbstractMinMaxType<?>> entry : _statisticMap.entrySet()) {
                buf.append(String.format("%-25s : %s\n", _abbreviation + "-" + entry.getKey(), entry.getValue()));
            }
            return buf.toString();
     }
+    
 }

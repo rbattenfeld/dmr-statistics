@@ -72,9 +72,7 @@ public class DmrModel implements IProtocolModel, Serializable {
         final StringBuffer buf = new StringBuffer();
         buf.append(String.format("%-25s : %s\n", "Statistic for", _name));
         for (final DmrPathElement element : _pathElements) {
-               for (final Map.Entry<String, Object> entry : element.getStatisticMap().entrySet()) {
-                   buf.append(String.format("%-25s : %s\n", element.getAbbreviation() + "-" + entry.getKey(), entry.getValue()));
-               }
+        	buf.append(element);
         }
         for (final DmrChildElement element : _childElements) {
             buf.append(element);

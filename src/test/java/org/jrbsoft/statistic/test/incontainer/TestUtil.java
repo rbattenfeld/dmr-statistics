@@ -10,6 +10,7 @@ public class TestUtil {
     	return  ShrinkWrap.create(JavaArchive.class, "resourceMonitor.jar")
 			.addPackages(true, "org.jrbsoft.statistic.model")
 			.addPackages(true, "org.jrbsoft.statistic.protocol")
+			.addPackages(true, "org.jrbsoft.statistic.logging")
 			.addPackages(true, "org.jrbsoft.statistic.test.incontainer")
 			.addPackages(true, "org.simpleframework.xml")
 			.addPackages(true, "org.xmlpull")
@@ -17,6 +18,7 @@ public class TestUtil {
     	    .addAsManifestResource("MANIFEST.MF", "MANIFEST.MF")
     	    .addAsManifestResource("mbean-stat.xml", "mbean-stat.xml")
     	    .addAsManifestResource("mbean-notification-stat.xml", "mbean-notification-stat.xml")
-    	    .addAsManifestResource("generic-stat.xml", "generic-stat.xml");
+    	    .addAsManifestResource("generic-stat.xml", "generic-stat.xml")
+    	    .addAsManifestResource("generic-stat.xml", "generic-stat-2.xml");
     }
 }

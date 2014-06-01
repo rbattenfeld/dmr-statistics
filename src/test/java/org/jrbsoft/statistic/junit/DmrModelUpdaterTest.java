@@ -13,7 +13,6 @@ import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.Operation;
 import org.jboss.as.controller.client.OperationMessageHandler;
 import org.jboss.dmr.ModelNode;
-import org.jboss.dmr.ModelType;
 import org.jboss.threads.AsyncFuture;
 import org.jrbsoft.statistic.model.IProtocolModel;
 import org.jrbsoft.statistic.model.IRootModel;
@@ -37,37 +36,37 @@ public class DmrModelUpdaterTest {
                 final DmrModel model = (DmrModel)protocolModel;
                 for (final DmrChildElement childElement :model.getChildElements()) {
                     if (childElement.getAbbreviation().equals("heap")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("init"), 300000);
-                        assertNodeEquals(childElement.getStatisticMap().get("used"), 300001);
-                        assertNodeEquals(childElement.getStatisticMap().get("committed"), 300002);
-                        assertNodeEquals(childElement.getStatisticMap().get("max"), 300003);
+                    	assertEquals(childElement.getCurrentValue("init"), 300000);
+                        assertEquals(childElement.getCurrentValue("used"), 300001);
+                        assertEquals(childElement.getCurrentValue("committed"), 300002);
+                        assertEquals(childElement.getCurrentValue("max"), 300003);
                         
-                        assertNodeEquals(childElement.getStatisticMap().get("initXX"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("usedXX"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("committedXX"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("maxXX"), "undefined");                    
+                        assertEquals(childElement.getCurrentValue("initXX"), "undefined");
+                        assertEquals(childElement.getCurrentValue("usedXX"), "undefined");
+                        assertEquals(childElement.getCurrentValue("committedXX"), "undefined");
+                        assertEquals(childElement.getCurrentValue("maxXX"), "undefined");                    
                     }
                     
                     if (childElement.getAbbreviation().equals("non-heap")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("init"), 300004);
-                        assertNodeEquals(childElement.getStatisticMap().get("used"), 300005);
-                        assertNodeEquals(childElement.getStatisticMap().get("committed"), 300006);
-                        assertNodeEquals(childElement.getStatisticMap().get("max"), 300007);
+                        assertEquals(childElement.getCurrentValue("init"), 300004);
+                        assertEquals(childElement.getCurrentValue("used"), 300005);
+                        assertEquals(childElement.getCurrentValue("committed"), 300006);
+                        assertEquals(childElement.getCurrentValue("max"), 300007);
                     }
                     
                     if (childElement.getAbbreviation().equals("os")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("available-processors"), 8);
-                        assertNodeEquals(childElement.getStatisticMap().get("system-load-average"), BigDecimal.valueOf(0.01));
+                        assertEquals(childElement.getCurrentValue("available-processors"), 8);
+                        assertEquals(childElement.getCurrentValue("system-load-average"), BigDecimal.valueOf(0.01));
                     }
                     
                     if (childElement.getAbbreviation().equals("invalidChilds-1")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("available-processors"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("system-load-average"), "undefined");
+                        assertEquals(childElement.getCurrentValue("available-processors"), "undefined");
+                        assertEquals(childElement.getCurrentValue("system-load-average"), "undefined");
                     }
     
                     if (childElement.getAbbreviation().equals("invalidChilds-2")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("available-processors"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("system-load-average"), "undefined");
+                        assertEquals(childElement.getCurrentValue("available-processors"), "undefined");
+                        assertEquals(childElement.getCurrentValue("system-load-average"), "undefined");
                     }
                 }
             }
@@ -86,15 +85,15 @@ public class DmrModelUpdaterTest {
                 final DmrModel model = (DmrModel)protocolModel;
                 for (final DmrChildElement childElement : model.getChildElements()) {                    
                     if (childElement.getAbbreviation().equals("non-heap")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("init"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("used"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("committed"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("max"), "undefined");
+                        assertEquals(childElement.getCurrentValue("init"), "undefined");
+                        assertEquals(childElement.getCurrentValue("used"), "undefined");
+                        assertEquals(childElement.getCurrentValue("committed"), "undefined");
+                        assertEquals(childElement.getCurrentValue("max"), "undefined");
                     }
 
                     if (childElement.getAbbreviation().equals("os")) {
-                        assertNodeEquals(childElement.getStatisticMap().get("available-processors"), "undefined");
-                        assertNodeEquals(childElement.getStatisticMap().get("system-load-average"), "undefined");
+                        assertEquals(childElement.getCurrentValue("available-processors"), "undefined");
+                        assertEquals(childElement.getCurrentValue("system-load-average"), "undefined");
                     }    
                 }
             }
@@ -120,25 +119,6 @@ public class DmrModelUpdaterTest {
     private InputStream getStream(final String path) throws FileNotFoundException {
         final File file = new File(path);
         return new FileInputStream(file);
-    }
-
-    private void assertNodeEquals(final Object obj, final Object expectedValue) {
-        final ModelNode node = (ModelNode)obj;
-        if (node.getType() == ModelType.UNDEFINED) {
-            assertEquals("undefined", expectedValue);
-        } else if (node.getType() == ModelType.BIG_DECIMAL) {
-            assertEquals(node.asBigDecimal(), expectedValue);
-        } else if (node.getType() == ModelType.BIG_INTEGER) {
-            assertEquals(node.asBigInteger(), expectedValue);
-        } else if (node.getType() == ModelType.INT) {
-            assertEquals(node.asInt(), expectedValue);
-        } else if (node.getType() == ModelType.DOUBLE) {
-            assertEquals(node.asDouble(), expectedValue);
-        } else if (node.getType() == ModelType.LONG) {
-            assertEquals(node.asLong(), expectedValue);
-        } else if (node.getType() == ModelType.STRING) {
-            assertEquals(node.asString(), expectedValue);
-        }
     }
     
     //-----------------------------------------------------------------------||

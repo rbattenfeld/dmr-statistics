@@ -67,7 +67,7 @@ public class DmrModelUpdater implements IModelUpdater {
             for (final String child : pathElement.getChilds()) {
                 childNode = childNode.get(child);
             }
-            DmrUtil.updateStatistics(childNode, pathElement.getKeys(), pathElement.getStatisticMap());
+            DmrUtil.updateStatistics(childNode, pathElement.getKeys(), pathElement);
         }
 
         for (final DmrPathElement childElement : model.getPathElements()) {
@@ -75,7 +75,7 @@ public class DmrModelUpdater implements IModelUpdater {
             if (items.length == 2) {
                 final ModelNode result = response.asObject().get(items[0]);
                 if (!result.get(ClientConstants.OUTCOME).asString().equals(ClientConstants.UNDEFINE_ATTRIBUTE_OPERATION)) {
-                    DmrUtil.updateStatistics(result.get(items[1]), childElement.getKeys(), childElement.getStatisticMap());
+                    DmrUtil.updateStatistics(result.get(items[1]), childElement.getKeys(), childElement);
                 }
             }
         }

@@ -1,6 +1,60 @@
-<statistic deploymentName="test.war" logCategory="ejb3stat" intervall="5000" csvSeparator=";">
-     
-   <model name="platform" path-address="core-service=platform-mbean" class="org.jrbsoft.statistic.protocol.dmr.model.DmrModel">
+<statistic deploymentName="test.war" logCategory="serverStatistic" intervall="5000" csvSeparator=";">
+   
+   <mbean name="exampleDS" object-name="jboss.as:subsystem=datasources,data-source=ExampleDS,statistics=pool">
+      
+      <mbean-element abbreviation="pool">
+         <keys>ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime</keys>
+      </mbean-element>
+      
+   </mbean>
+   
+   <dmr name="ejb" path-address="deployment=test.war/subsystem=ejb3">
+      <child-element abbreviation="TestSingleton">
+         <childs>singleton-bean, TestSingleton</childs>
+         <keys>execution-time, invocations, wait-time</keys>
+      </child-element>
+      
+      <child-element abbreviation="TestSingleton-callMe">
+         <childs>singleton-bean, TestSingleton, methods, callMe</childs>
+         <keys>execution-time, invocations, wait-time</keys>
+      </child-element>
+            
+      <child-element abbreviation="TestBean">
+         <childs>stateless-session-bean, TestBean</childs>
+         <keys>execution-time, invocations, wait-time, security-domain</keys>
+      </child-element>
+      
+      <child-element abbreviation="TestBean-testMe">
+         <childs>stateless-session-bean, TestBean, methods, testMe</childs>
+         <keys>execution-time, invocations, wait-time</keys>
+      </child-element>
+   </dmr>
+   
+<!--    <dmr name="exampleDS" path-address="subsystem=datasources/data-source=ExampleDS"> -->
+<!--       <child-element abbreviation="jdbc"> -->
+<!--          <childs>statistics, jdbc</childs> -->
+<!--          <keys>PreparedStatementCacheAccessCount, PreparedStatementCacheHitCount, PreparedStatementCacheMissCount</keys> -->
+<!--       </child-element> -->
+      
+<!--       <child-element abbreviation="pool"> -->
+<!--          <childs>statistics, pool</childs> -->
+<!--          <keys>ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime</keys> -->
+<!--       </child-element> -->
+<!--    </dmr> -->
+   
+<!--    <dmr name="seni-req-portal-gs-adapter" path-address="deployment=seni-req-portal-gs-adapter-9.0.0.4.rar/subsystem=resource-adapters/statistics=statistics/resource-adapter=seni-req-portal-gs-adapter-9.0.0.4.rar"> -->
+<!--       <path-element abbreviation="connectionFactory"> -->
+<!--          <keys>ActiveCount, AvailableCount, InUseCount, MaxUsedCount, MaxWaitCount, MaxWaitTime</keys> -->
+<!--          <path-element>connection-definitions=java:global/DefaultGigaSpaceConnectionFactory</path-element> -->
+<!--       </path-element> -->
+
+<!--       <path-element abbreviation="workmanager"> -->
+<!--          <keys>work-active, work-failed, work-successful</keys> -->
+<!--          <path-element>workmanager=default</path-element> -->
+<!--       </path-element> -->
+<!--    </dmr> -->
+   
+   <dmr name="platform" path-address="core-service=platform-mbean">
       <child-element abbreviation="heap">
          <childs>type, memory, heap-memory-usage</childs>
          <keys>init, used, committed, max</keys>
@@ -15,6 +69,6 @@
          <childs>type, operating-system</childs>
          <keys>available-processors, system-load-average</keys>
       </child-element>   
-   </model>
+   </dmr>
    
 </statistic>
