@@ -72,10 +72,10 @@ public class MBeanModelUpdater implements IModelUpdater {
 	                for (final MBeanElement element : model.getMBeanElements()) {
 	                    updateStatistics(mbean, element.getKeys(), element);
 	                }
-	                if (mbean instanceof NotificationBroadcaster) {
-	                	_models.add(model);
-	                	register(mbean);
-	                }
+//	                if (mbean instanceof NotificationBroadcaster) { TODO not notification at the moment, the model is not thread safe designed by purpose
+//	                	_models.add(model);
+//	                	register(mbean);
+//	                }
 	            } else {
 	                _Logger.warn("Not registered: " + model.getObjectName());
 	            }
